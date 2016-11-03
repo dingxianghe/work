@@ -1,0 +1,328 @@
+页面结构：
+<header>用在页面的头部或板块的头部</header>
+<footer>用在页面的底部或板块的底部</footer>
+<nav>里面可以放a标签 列表 之类的</nav>
+<hgroup>标题的组合h1 h2</hgroup>
+<section>用来划分区域</section>
+<article>相对独立的一个内容部分 文章<article>
+<aside>和主体相关的附属信息侧边栏 广告 引用</aside>
+
+元素标签：
+<figure>图片视频的组合</figure>
+<time>时间</time>
+<address></address> 定义文章 或页面作者的详细联系信息
+<mark></mark> 需要标记的词或句子
+有功能的：
+<datalist></datalist>选项列表。与 input 元素配合使用，来定义 input 可能的值。
+<input type="text" list="valList" />
+    <datalist id="valList">
+     	<option value="javascript">javascript</option>
+    	<option value="html">html</option>
+   	<option value="css">css</option>
+    </datalist>
+
+<details></details>用于描述文档或文档某个部分的细节
+该元素用于摘录引用等 应该与页面的主要内容区分开的其他内容
+Open 属性默认展开
+< summary></summary> details 元素的标题
+	<details>
+		<summary>妙味课堂</summary>
+		<p>国内将知名的IT培训机构</p>
+	</details>
+
+<dialog></dialog>定义一段对话
+<dialog>
+  <dt>老师</dt>
+  <dd>2+2 等于？</dd>
+  <dt>学生</dt>
+  <dd>4</dd>
+  <dt>老师</dt>
+  <dd>答对了！</dd>
+</dialog>
+
+
+<progress><progress>定义进度条
+<progress max="100" value="76">
+         <span>76</span>%
+    </progress>
+
+
+
+新的表单特性和函数
+placeholder  :  输入框提示信息
+例子 :  微博的密码框提示
+autocomplete  :  是否保存用户输入值
+默认为on，关闭提示选择off
+autofocus  :  指定表单获取输入焦点
+list和datalist  :  为输入框构造一个选择列表
+list值为datalist标签的id
+required  :  此项必填，不能为空
+Pattern : 正则验证  pattern="\d{1,5}“
+Formaction 在submit里定义提交地址
+
+表单验证
+validity对象，通过下面的valid可以查看验证是否通过，如果八种验证都通过返回true，一种验证失败返回false
+oText.addEventListener("invalid",fn1,false);
+ev.preventDefault()
+valueMissing  :  输入值为空时
+typeMismatch :  控件值与预期类型不匹配
+patternMismatch  :  输入值不满足pattern正则
+tooLong  :  超过maxLength最大限制
+rangeUnderflow : 验证的range最小值
+rangeOverflow：验证的range最大值
+stepMismatch: 验证range 的当前值 是否符合min、max及step的规则
+customError 不符合自定义验证
+setCustomValidity(); 自定义验证
+
+表单验证
+Invalid事件  :  验证反馈 input.addEventListener('invalid',fn,false)
+阻止默认验证：ev.preventDefault()
+formnovalidate属性  :  关闭验证
+
+
+
+新的选择器
+querySelector()  类似JQ的$（）不过只选择第一个元素  
+querySelectorAll（） 类似JQ的$（）选择一组元素
+
+获取class列表属性
+classList的方法：
+length :  class的长度
+add()  :  添加class方法
+remove()  :  删除class方法
+toggle() :  切换class方法
+
+
+JSON的新方法
+parse() : 把字符串转成json
+字符串中的属性要严格的加上引号
+stringify() : 把json转化成字符串
+会自动的把双引号加上
+新方法与eval的区别
+新方法的应用
+深度克隆新对象
+如何其他浏览器做到兼容
+http://www.json.org/去下载json2.js
+
+
+data自定义数据
+dataset
+data-name :  dataset.name
+data-name-first  :  dataset.nameFirst 
+Data数据在jquery mobile中有着重要作用
+ 通过添加自定义属性来添加相应的功能 
+
+Html5的defer和async
+defer : 延迟加载，会按顺序执行，在onload执行前被触发
+async : 异步加载，加载完就触发，有顺序问题
+
+
+
+历史管理
+onhashchange事件：改变hash值来管理
+history：
+服务器下运行
+pushState :  三个参数 ：数据  标题(都没实现)  地址(可选)
+popstate事件 :  读取数据   event.state
+注意：网址是虚假的，需在服务器指定对应页面，不然刷新找不到页面
+
+
+拖放事件 
+draggable ：
+设置为true，元素就可以拖拽了
+拖拽元素事件 :  事件对象为被拖拽元素
+dragstart ,  拖拽前触发 
+drag ,拖拽前、拖拽结束之间，连续触发
+dragend  , 拖拽结束触发
+目标元素事件 :  事件对象为目标元素
+dragenter ,  进入目标元素触发，相当于mouseover
+dragover  ,进入目标、离开目标之间，连续触发
+dragleave ,  离开目标元素触发，相当于mouseout
+drop  ,  在目标元素上释放鼠标触发
+
+拖放事件_2 
+事件的执行顺序 ：drop不触发的时候
+dragstart  >  drag >  dragenter >  dragover >  dragleave > dragend 
+事件的执行顺序 ：drop触发的时候(dragover的时候阻止默认事件)
+dragstart  >  drag >  dragenter >  dragover >  drop > dragend
+不能释放的光标和能释放的光标不一样
+
+
+拖放事件_3 
+解决火狐下的问题
+必须设置dataTransfer对象才可以拖拽除图片外的其他标签
+
+ev.dataTransfer对象
+setData() : 设置数据 key和value(必须是字符串)
+getData() : 获取数据，根据key值，获取对应的value
+effectAllowed : 设置光标样式(none, copy, copyLink, copyMove, link, linkMove, move, all 和 uninitialized)
+setDragImage： 设置拖拽的图片样式
+三个参数：指定的元素，坐标X，坐标Y
+files 
+获取外部拖拽的文件，返回一个filesList列表
+filesList下有个type属性，返回文件的类型
+
+
+FileReader(读取文件信息)
+readAsDataURL
+参数为要读取的文件对象，将文件读取为DataUrl 
+onload
+当读取文件成功完成的时候触发此事件
+this. result , 来获取读取的文件数据，如果是图片，将返回base64格式的图片数据
+实例
+拖拽删除列表
+拖拽购物车
+上传图片预览功能
+
+
+
+
+canvas:
+
+var oGC = oC.getContext('2d'); 
+
+下面的所有属性都是在oGc的对象上面的；
+fillRect(L,T,W,H):方块 默认黑色
+strokeRect(L,T,W,H):带边框的方块
+
+fillStyle:填充颜色
+lineWidth:线宽度
+strokeStyle:边框颜色
+
+
+lineJoin:连接点样式（圆角round）(斜角bevel)
+lineCap:线段端点样式（圆角round）(斜角bevel)斜角长度会多出来宽度的一半
+
+（先设置完要画的图形属性，然后再填充或者绘制）
+beginPath（）:开始绘制路径   一段路径 包起来
+closePath（）:结束绘制路径   一段路径 包起来 （结束会自动连接首尾）
+moveTo（L,T）:起始点
+lineTo（L,T）:新的目标点
+
+stroke():画线，默认黑色
+fill():填充，默认黑色
+rect（L,T,W,H）:矩形区域
+clearRect（L,T,W,H）:删除一个画布的矩形区域
+save（）:保存路径
+restore():恢复路径
+
+
+arc(x,y,半径，起始弧度，结束弧度，旋转方向)
+	-x,y：起始位置
+	-弧度与角度的关系：弧度=角度*Math.PI/180
+	-旋转方向：顺时针（默认：false）、逆时针（true）
+
+其他曲线：
+arcTo(x1,y1,x2,y2,r)  第一组坐标，第二组坐标，半径
+quadraticCurveTo(dx,dy,x1,y1)第一组控制点 第二组结束坐标
+bezierCurveTo(dx1,dy1,dx2,dy2,x1,y1)控制点，控制点，结束点
+
+
+变换：
+translate(x,y):偏移  以起始点为基准点偏移X,Y
+rotate()旋转  参数为弧度图片
+scale（x,y）缩放   x,y方向缩放到x,y倍
+
+
+
+背景，渐变的对象属于颜色属性！
+
+设置背景（设置方式如同渐变）
+var obj = oGC.createPattern(oimg，平铺方式)
+	repeat\repeat-x\repeat-y\no-repeat
+
+
+渐变
+var obj = oGC.createLinearGradient(x1,y1,x2,y2)
+线性渐变：第一组参数起始点坐标 第二组参数结束点坐标
+
+obj.addColorStop(位置，颜色)添加渐变点和颜色 0-1之间
+
+createRadialGradient(x1,y1,r1,x2,y2,r2)
+放射性渐变：起始点圆的坐标和半径，终点圆的坐标和半径
+
+oGC.fillStyle = obj;（设置颜色）
+
+oGC.fillRect(150,100,100,100) （填充颜色）
+
+文字
+strokeText('文字',x,y)    文字显示为边框效果
+fillText('文字',x,y) 	文字显示为填充效果
+font=‘60px impact’	文字大小 颜色 字体 类似CSS属性
+textAlingn=‘’		文字的左右对齐方式 left center right
+textBaseline=‘’	文字的上下对齐方式 top center bottom
+measureText('文字').width   文字宽度
+
+
+
+阴影(不加单位)
+shadowOffsetX\shadowOffsetY     X\Y轴偏移量
+shadowBlur=10			高斯模糊值
+shadowColor='yellow'		
+
+插入图片
+等图片加载完，再执行canvas操作
+	-图片预加载：在onload中调用方法
+var yImg = new Image();
+yImg.src='1.jpg';yImg.onload = function(){
+		
+		draw(this);
+		
+	};
+
+添加图片到画布
+ drawImage(oimg,X,Y,W,H)
+	-oimg:当前图片x,y坐标 
+
+
+
+
+
+像素：图片的像素操作必须是在同源下
+
+var oImg = oGC.getImageData(x,y,w,h) 
+	获取画布上的像素矩阵
+
+像素矩阵的属性：
+	width:一行的像素个数
+	height:一列的像素个数
+	data:一个数组，包含每个像素的rgba四个值，注意每个值都在0-255之间
+	data.length=width*height*4;
+
+
+var oImg = createImageData(w,h) 
+	生成新的像素矩阵，初始值是全透明黑色
+
+oGc.putImageData(像素集合,x,y)  通过像素矩阵设置的图像数据
+
+
+像素逐步显字：将所有像素点分成十组，然后每次显示一组；
+马赛克的效果:在一片像素矩阵中随机取一个点的颜色，将这个点的颜色循环设置成这片像素矩阵的颜色；
+	
+
+
+
+合成
+全局阿尔法值	
+	oGc.globalAlpha=   透明度(0-1)
+覆盖合成
+	源：新的图像
+	目标：已经绘制过的图形
+目标与源重合的地方：
+	globalCompositeOperation属性
+	xor（去除）	source-over destination-over .....很多
+
+
+重置画布：
+alert('游戏结束');
+window.location.reload();
+
+
+点击事件是在canvas上面发生的
+
+画布导出为图像
+toDataURL     图像导出为图片的src值
+事件操作
+判断多个图形是否被点击时，应建立一个函数，先重新绘制所有的图像，每个图像在绘制完成后执行一次判断是否被点击（用面向对象的方法比较方便）
+oGc.isPointlnPath(x,y) =true; 	
+	（x,y）点在新绘制图形的范围内触发该属性

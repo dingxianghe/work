@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	<style>
+		ul,li{margin:0;padding:0;}
+		li{list-style:none;}
+		div{
+			width:300px;
+			height:500px;
+			border:1px solid black;
+		}
+		ul{width: 300px;}
+		li{border: 1px solid black;font:20px/30px "微软雅黑";}
+		em{font:24px "微软雅黑";margin-right: ;}
+		strong{width:35px;border:1px solid black;padding:0px;float: right;margin-top:8px ;}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var ast=document.getElementsByTagName('Strong');
+			var aul=document.getElementsByTagName('ul')[0];
+			var xu0=['纷纷杀跌克里夫','发生大洪水地','首发式地方还i','是的方法','粉红色的飞机还是都i','是否合适地方','士大夫似的家里','佛山东莞警方','月日哦让我','放缓士大夫vv'];
+			var xu1=['纷纷杀跌克里夫','发生洪水地','发式地方还i','是方法','粉红色的还是都i','是否合地方','士大夫的家里','佛山莞警方','哦让我','放大夫vv']
+			var xu2=['纷纷杀跌克里夫','发生大洪地','首发式方还i','是的方法','粉色的飞机还是都i','是适地方','士大似家里','佛山莞警','哦让我','放缓士大v']
+			ast[0].onclick=function (){lo(xu0)};
+			ast[1].onclick=function (){lo(xu1)};
+			ast[2].onclick=function (){lo(xu2)};
+			lo(xu0);
+			function lo(xu){
+				aul.innerHTML='';
+			for(var i=0;i<10;i++){
+				aul.innerHTML+='<li>'+[i+1]+':'+xu[i]+'</li>';
+			}
+			var ali=document.getElementsByTagName('li');
+			var op=ali[0];
+			for(var i=0;i<ali.length;i++){
+				ali[i].onmouseover=function(){
+					op.style.height=30+'px';
+					this.style.height=80+'px';
+					op=this;
+				}
+				ali[i].onmouseout=function(){
+					this.style.height=30+'px';
+				}
+			}
+		}
+		}
+	</script>
+	</head>
+	<body>
+		<div>
+			<em>观看排行榜</em>
+			<strong >每日</strong>
+			<strong>每周</strong>
+			<strong>全部</strong>
+			<ul>
+			</ul>
+		</div>
+	</body>
+</html>

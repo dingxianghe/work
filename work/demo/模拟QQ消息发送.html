@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#bbox{
+				width:256px;
+				height:525px;
+				background:url(bbox.gif);
+				float: left;
+			}
+			#kbox{
+				width:210px;
+				height:372px;
+				margin:74px auto 76px;
+				background:#fff;
+				border:2px solid black;
+			}
+			#mbox{
+				width:210px;
+				height: 328px;
+				overflow: scroll;				
+			}
+			#dbox{
+				width: 200px;
+				height: 30px;
+				padding: 6px 4px;
+				border: 1px solid #cbd8d2;
+				position:relative;
+
+	 		}
+			#dbox input{
+				width: 123px;
+				height: 28px;
+				padding: 0px;
+				position: absolute;
+				left: 38px;
+		
+			}
+			#ip{
+				float: right;
+				font-size:18px ;
+				padding: 0px;
+				margin-top: 4px;
+			}
+			#btn{
+				width: 34px;
+				height: 34px;
+				padding: 0px;
+				background: url(dabing.gif) no-repeat;
+				position: absolute;
+			}
+			.box1,.box2{
+				font:12px/25px "微软雅黑";
+				display: inline-block;
+				float:top;
+				width: 190px;
+				background:url(dabing.gif) no-repeat 10px 0px;		
+				color:#000;
+			}
+			.box2 {					
+				background:url(ku.gif) no-repeat 160px 0px;		
+				color:#fff;		
+			}
+			.qq,.ww{
+				margin: 0px;
+				padding: 5px;
+				float: left;
+				margin-left:40px;	
+				background:#ded6e7;
+			}		
+			.ww{
+				float: right;
+				margin-right:40px ;	
+				background:#21c618;
+			}
+			
+		</style>
+		
+	</head>
+	<body>
+		<div id="bbox">
+			<div id="kbox">
+				<div id="mbox">	
+				</div>
+				<div id="dbox">
+		 			<button id="btn" ></button>
+					<input  id="text1" type="text" value=""/>
+					<button id="ip">发送</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+	        var hu=1;
+			var obtn=document.getElementById('btn');
+			var otext=document.getElementById('text1');
+			var obox=document.getElementById('mbox');
+			var op=document.getElementById('ip');
+			var num=true;			
+			obtn.onclick = function () {
+				if(num==true){	
+					obtn.style.backgroundImage='url(ku.gif)';
+					obtn.style.backgroundPosition='5px';
+					num=false;
+				}else{
+					obtn.style.backgroundImage='url(dabing.gif)';
+				   obtn.style.backgroundPosition='0px';
+					num=true;
+				}
+			}
+			op.onclick=function(){
+				if(otext.value==''){
+					alert("请输入文字");
+				}
+				else if(num==true){
+					obox.innerHTML='<div id="d'+hu+'" class="box1"><p id="p'+hu+'" class="qq"></p></div>'+obox.innerHTML;
+					var we=document.getElementById('p'+hu);
+					we.innerHTML=otext.value;	
+					otext.value='';
+					hu++;
+				}else{
+					obox.innerHTML='<div id="d'+hu+'" class="box2"><p id="p'+hu+'" class="ww"></p></div>'+obox.innerHTML;
+					var we=document.getElementById('p'+hu);
+					we.innerHTML=otext.value;
+					otext.value='';
+					hu++;
+				}
+			}
+	</script>
+</html>

@@ -1,0 +1,70 @@
+d:
+cd aaaa 进入文件夹
+
+通过 webpack js文件名 入口文件的JS名称
+
+npm 包管理工具
+
+npm install 包的名字//安装一个包
+
+
+先定位到目录这个文件夹里面 
+npm install 
+直接安装package.json里面配置的依赖项目，并且在目录底下创建一个node_modules的文件夹，然后里面是下载好的依赖文件
+
+virtualBox
+虚拟机CenOS安装
+xshell download
+xftp download
+
+mongodb
+redis
+webstorm
+
+vi/etc/sysconfig/network-scripts/ifcfg-enp0s3
+设置最后一个为yes
+systemctl restart network
+重启网络服务
+
+创建文件 vi 文件名
+
+启动服务器
+npm run serve
+
+启动客户端
+npm run client
+
+安装expressjs
+npm install express --save
+
+
+
+var express=require('express');
+var app=express();
+
+app.get('/mingzi',function(req,res){
+	res.send('hello world')
+})
+
+app.listen(3000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

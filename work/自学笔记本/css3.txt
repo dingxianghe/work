@@ -1,0 +1,527 @@
+属性选择器：
+
+E[attr]		   选择含有属性attr的元素
+p[attr="abc"] { }  选择其中attr="abc"的p元素
+p[attr~="abc"] { } 选择其中attr里含有abc词的p元素
+p[attr^="a"] { }   选择其中attr里a开头的p元素
+p[attr$="a"] { }   选择其中attr里a结尾的p元素
+p[attr*="c"] { }   选择其中attr里包含c的p元素
+p[attr|="c"] { }   选择attr为c或者c-开头的p元素
+
+如 input[type="text"] { } 选择文本输入框
+
+
+结构选择器：
+
+p:nth-child(n)  表示p父元素中的第n个字节点
+n值: odd(奇数行)；even:(偶数行)；3n（0,3,6..）
+p:nth-last-child(n)  从后往前算
+p:nth-of-type(n)  表示E父元素中的第n个字节点，且类型为E
+p:nth-last-of-type(n)表示E父元素中的第n个字节点，且类为p ，从后向前计算   
+p:empty p元素中没有子节点，包含文本节点  就是空节点
+E:first-child 表示E元素中的第一个子节点
+E:last-child 表示E元素中的最后一个子节点
+E:first-of-type 表示E父元素中的第一个子节点且节点类型是E的
+E:last-of-type 表示E父元素中的最后一个子节点且节点类型是E的
+E:only-child表示E元素中只有一个子节点。注意：子节点不包含文本节点
+E:only-of-type 表示E的父元素中只有一个子节点，且这个唯一的子节点的类型必须是E。注意：子节点不包含文本节点
+E:target 表示当前的URL片段的元素类型，这个元素必须是E            操作锚点链接的元素
+E:disabled 表示不可点击的表单控件
+E:enabled 表示可点击的表单控件
+E:checked 表示已选中的checkbox或radio
+E:first-line 表示E元素中的第一行
+E:first-letter 表示E元素中的第一个字符
+E::selection表示E元素在用户选中文字时
+E::before 生成内容在E元素前  Content 属性
+E::after 生成内容在E元素后   Content 属性
+E:not(s) 表示E元素不被匹配
+E~F表示E元素毗邻的F元素
+
+rgba
+r	Red		红	0-255
+g	Green		绿	0-255
+b	Blue		蓝	0-255
+a	Alpha		透明	0-1
+
+
+Hsl
+H	Hue		色调	任意数值
+S 	saturation    饱和度   	 0%-100%
+L	Lightness	亮度	0%-100%
+
+文字阴影
+text-shadow：x y blur color, …
+
+阴影叠加
+text-shadow:2px 2px 0px red, 2px 2px 4px green;
+先渲染后面的，再渲染前面的
+
+
+层叠：color:red; font-size:100px; font-weight:bold; text-shadow:2px 2px 0px white, 4px 4px 0px red;
+光晕：color:white; font-size:100px; text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
+火焰文字：text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e; font-family:Verdana, Geneva, sans-serif; font-size:100px; font-weight:bold; color:white;
+
+文字描边
+-webkit-text-stroke:宽度 颜色
+
+Direction  定义文字排列方式(全兼容)
+Rtl 从右向左排列
+Ltr 从右向左排列
+注意要配合unicode-bidi 一块使用
+
+Text-overflow 定义省略文本的处理方式
+clip  无省略号
+Ellipsis 省略号 (注意配合overflow:hidden和white-space:nowrap一块使用) 
+
+
+自定义文字
+@font-face {
+    font-family: ‘miaov';
+    src: url('111-webfont.eot');
+    src: url('111-webfont.eot?#iefix') format('embedded-opentype'),
+         url('111-webfont.woff') format('woff'),
+         url('111-webfont.ttf') format('truetype'),
+         url('111-webfont.svg#untitledregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+转换字体格式生成兼容代码http://www.fontsquirrel.com/fontface/generator
+
+
+
+注意在使用弹性盒模型的时候 父元素必须要加display:box 或 display:inline-box
+Box-orient 定义盒模型的布局方向
+Horizontal 水平显示
+vertical 垂直方向
+box-direction 元素排列顺序
+Normal 正序
+Reverse 反序
+box-ordinal-group 设置元素的具体位置
+
+Box-flex 定义盒子的弹性空间
+子元素的尺寸=盒子的尺寸*子元素的box-flex属性值 / 所有子元素的box-flex属性值的和 
+box-pack 对盒子富裕的空间进行管理
+Start 所有子元素在盒子左侧显示，富裕空间在右侧
+End 所有子元素在盒子右侧显示，富裕空间在左侧
+Center 所有子元素居中
+Justify 富余空间在子元素之间平均分布
+
+box-align 在垂直方向上对元素的位置进行管理
+Star 所有子元素在据顶
+End 所有子元素在据底
+Center 所有子元素居中
+
+
+用法
+box-shadow:[inset] x y blur [spread] color
+参数
+inset：投影方式
+inset：内投影
+不给：外投影
+x、y：阴影偏移
+blur：模糊半径
+spread：扩展阴影半径 px
+先扩展原有形状，再开始画阴影
+color
+
+
+box-reflect 倒影
+direction  方向     above|below|left|right;
+距离
+渐变（可选）
+resize 自由缩放
+Both 水平垂直都可以缩放
+Horizontal 只有水平方向可以缩放
+Vertical 只有垂直方向可以缩放
+注意：一定要配合overflow:auto 一块使用只有水平方向可以缩放
+
+
+box-sizing 盒模型解析模式
+Content-box  标准盒模型 width/height=border+padding+content
+Border-box 怪异盒模型 width/height=content
+
+
+column-width 栏目宽度
+column-count 栏目列数
+column-gap   栏目距离
+column-rule  栏目间隔线 
+
+
+响应式
+媒体类型
+all 所有媒体
+braille 盲文触觉设备
+embossed 盲文打印机
+print 手持设备 
+projection 打印预览
+screen 彩屏设备
+speech '听觉'类似的媒体类型
+tty 不适用像素的设备
+tv  电视
+关键字
+and
+not      not关键字是用来排除某种制定的媒体类型
+only     only用来定某种特定的媒体类型
+
+
+媒体特性
+(max-width:600px) 
+(max-device-width: 480px)  设备输出宽度
+(orientation:portrait)  竖屏
+(orientation:landscape)	横屏
+ (-webkit-min-device-pixel-ratio: 2) 像素比
+devicePixelRatio 设备像素比 window.devicePixelRatio = 物理像素 / dips
+
+样式引入
+<link rel="stylesheet" type="text/css" href="../css/print.css" media="print" />
+ @import url("css/reset.css") screen;
+@media screen{
+      选择器{
+ 	属性：属性值；
+     }
+   }
+
+<link rel=”stylesheet” media=”all and (orientation:portrait)” href=”portrait.css”>
+<link rel=”stylesheet” media=”all and (orientation:landscape)”href=”landscape.css”>
+@media screen and (min-width:400px) and (max-width:500px) {.box {margin: 0 auto;}}
+
+
+
+<meta name="viewport" content="" />
+width [pixel_value | device-height]
+height [pixel_value | device-height]
+user-scalable 是否允许缩放 （no||yes）
+initial-scale 初始比例
+minimum-scale 允许缩放的最小比例
+maximum-scale 允许缩放的最大比例 
+target-densitydpi [dpi_value | device-dpi | high-dpi | medium-dpi | low-dpi] 
+
+
+圆角：
+
+border-radius: 1-4个数字 / 1-4个数字
+前面是水平，后面是垂直
+各种长度单位都可以：px，%，…
+左上    右上    右下    左下
+
+边框图片 
+border-image：url（） 30 40 round；
+  	引入图片 切割图片  图片的排列方式
+round 平铺,repeat 重复,stretch拉伸 
+border-width 边框宽度
+
+
+线性渐变：
+
+linear-gradient(30deg，red 20px，blue 50%)
+	       角 度，点 位置，点 位置
+
+repeating-linear-gradient  平铺渐变
+只能用在背景上
+
+background:-webkit-linear-gradient(red,blue);			谷歌下
+background:-moz-linear-gradien(red,blue);
+	火狐下
+background:linear-gradient(red,blue); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='red',endColorstr='blue',GradientType='0');
+	IE下
+
+
+
+多背景之间直接用逗号隔开，互不影响
+background-size：100% 50%； 背景图片的大小缩放
+Cover 放大到内容区百分之百
+Contain 缩小到原图百分比
+
+background-origin ：border|padding|content  
+从border|padding|content 区域开始显示背景。
+border-box：从border区域开始显示背景。
+
+background-clip：border|padding|content|text
+从border|padding|content|text 区域向外裁剪背景
+从text字体区域想外裁剪背景（加内核前缀）
+
+
+
+径向渐变：
+radial-gradient([起点|形状|大小]?，点,点…);
+起点：可以是关键字（left,top,right,bottom），具体数值或百分比
+形状： ellipse（填满最大边）、circle（填满最小边）
+大小 :具体数值或百分比，也可以是关键字（最近端，最近角，最远端，最远角，包含或覆盖 (closest-side, closest-corner, farthest-side, farthest-corner, contain or cover)）;
+注意firefox目前只支持关键字
+
+
+
+遮罩层
+-webkit-mask:url(mask.png) no-repeat 100px 20px;
+	    图片 不平铺  位置 
+实例：特殊形状的幻灯片效果
+
+
+transition:2s 1s height ease,3s 3s background ease;
+   运动时间  延迟时间 要运动的属性  运动形式 
+ease：（逐渐变慢）默认值
+linear：（匀速）
+ease-in：(加速)
+ease-out：（减速）
+ease-in-out：（先加速后减速）
+cubic-bezier 贝塞尔曲线（ x1, y1, x2, y2 ） http://matthewlein.com/ceaser/
+
+
+过渡完成事件 
+Webkit内核/标准浏览器内核
+
+function（obj，fn）{
+ obj.addEventListener('webkitTransitionEnd',fn,false)
+ obj.addEventListener('transitionend',fn,false);
+}
+
+2D变化：
+
+-webkit-transform:rotate() skew() scale() translate()
+		 旋转函数 倾斜函数 缩放函数  位移函数
+	取值      deg 	    deg     倍数     位移量
+也可以单独指定X或Y的值  如：skewX() skewY() skewZ()
+					    3D						
+Transform 执行顺序问题 — 后写的先执行
+
+
+旋转的基点
+
+-webkit-transform-origin： 旋转的基点（根据元素的左上角定位）
+关键字：top left right bottom；也可以具体定位10px 10px
+
+
+Transform 执行顺序问题 — 后写的先执行
+
+matrix(a,b,c,d,e,f) 矩阵函数
+a,b,c,d是变换  e，f是位移
+
+通过矩阵实现缩放
+x轴缩放 a=x*a    c=x*c     e=x*e;
+y轴缩放 b=y*b   d=y*d     f=y*f;
+
+通过矩阵实现位移
+x轴位移: e=e+x
+y轴位移: f=f+y
+
+通过矩阵实现倾斜
+x轴倾斜: c=Math.tan(xDeg/180*Math.PI)
+y轴倾斜: b=Math.tan(yDeg/180*Math.PI)
+
+通过矩阵实现旋转
+a=Math.cos(deg/180*Math.PI); 
+b=Math.sin(deg/180*Math.PI);
+c=-Math.sin(deg/180*Math.PI);
+d=Math.cos(deg/180*Math.PI);
+
+变换兼容IE9以下IE版本只能通过矩阵来实现
+filter: progid:DXImageTransform.Microsoft.Matrix( M11= 1, M12= 0, M21= 0 , M22=1,SizingMethod='auto expand');
+
+IE下的矩阵没有E和F两个参数 M11==a; M12==c; M21==b; M22==d
+
+oBox.style.WebkitTransform="matrix(1,0,0.58,1,0,0)";
+oBox.style.MozTransform="matrix(1,0,0.58,1,0,0)";
+oBox.style.transform="matrix(1,0,0.58,1,0,0)";	oBox.style.filter="progid:DXImageTransform.Microsoft.Matrix( M11= 1, M12= 0.58, M21= 0 , M22=1,SizingMethod='auto expand')";
+
+谷歌内核/火狐内核/标准浏览器（IE10+）/IE9以下低版本
+
+通过JS来解救IE低版本下旋转中心偏移的问题：
+通过检测元素旋转时宽高的变化与父级的差值 不断赋予新的left top值
+<script>
+var oBox=document.getElementById("box");
+var iDeg=0;
+setInterval(function(){
+	iDeg++;
+	toRotate(oBox,iDeg);
+},30);
+function toRotate(obj,iDeg)
+{
+	var a=Math.round(Math.cos(iDeg/180*Math.PI)*100)/100;
+	var b=Math.round(Math.sin(iDeg/180*Math.PI)*100)/100;
+	var c=-b;
+	var d=a;
+	obj.style.WebkitTransform="matrix("+a+","+b+","+c+","+d+",0,0)";
+	obj.style.MozTransform="matrix("+a+","+b+","+c+","+d+",0,0)";
+	obj.style.transform="matrix("+a+","+b+","+c+","+d+",0,0)";
+	obj.style.filter="progid:DXImageTransform.Microsoft.Matrix( M11="+a+", M12= "+c+", M21= "+b+" , M22="+d+",SizingMethod='auto expand')";
+	obj.style.left=(obj.parentNode.offsetWidth-obj.offsetWidth)/2+"px";
+	obj.style.top=(obj.parentNode.offsetHeight-obj.offsetHeight)/2+"px";
+}
+</script>
+
+
+-webkit-transform-style:preserve-3d 建立3D空间
+-webkit-perspective: 景深
+-webkit-perspective-origin: 景深基点
+(在父级身上建立)
+
+
+
+animation
+@keyframes  miaov_test
+{
+	from { background:red; }
+	to { background:green; }
+}
+
+动画必要属性：
+-webkit-animation:4s miaov;
+	动画持续时间 动画名称（关键帧名称）
+
+
+animation-timing-function	动画运动形式
+linear	匀速。
+ease		缓冲。
+ease-in	由慢到快。
+ease-out	由快到慢。
+ease-in-out	由慢到快再到慢。
+cubic-bezier(number, number, number, number)：	特定的贝塞尔曲线类型，4个数值需在[0, 1]区间内
+
+播放状态：
+animation-play-state：running/paused;  播放/暂停
+
+
+
+浮动的层级永远比定位的层级低！
+设定属性变动为生效时，看选择符的优先级！
+
+可选属性(2)
+animation-delay			动画延迟
+只是第一次
+animation-iteration-count		重复次数
+infinite为无限次
+animation-direction			播放前重置
+动画是否重置后再开始播放
+alternate	动画直接从上一次停止的位置开始执行
+normal	动画第二次直接跳到0%的状态开始执行
+
+通过class
+在class里加入animation的各种属性
+直接给元素加-webkit-animation-xxx样式
+animation的问题
+写起来麻烦
+没法动态改变目标点位置
+obj.addEventListener('webkitAnimationEnd', function (){}, false);
+实例1：无缝滚动
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

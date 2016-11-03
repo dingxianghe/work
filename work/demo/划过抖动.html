@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		img{position: relative;
+		left: 100px;
+		top: 100px;
+		width: 100px;
+		height: 100px;}
+	</style>
+	<script src="js/miaov.js"></script>
+	<script>
+		window.onload=function(){
+			var aimg=document.getElementsByTagName('img');
+			var su=parseInt( getStyle(aimg[0], 'left') )
+			aimg[0].onmouseover=function(){
+				this.style.left=su+'px';
+				shake(this,'left');
+			}
+			function shake(obj,attr,endFn){
+				var arr=[];
+				var num=0;
+				var pos = parseInt( getStyle(obj, attr) );
+				obj.style[attr]=su+'px';
+				for(var i=20;i>0;i-=2){
+					arr.push(i,-i);
+				}arr.push(0);
+				clearInterval( obj.shake );
+				obj.shake = setInterval(function (){
+				obj.style[attr] = pos + arr[num] + 'px';
+				num++;
+				if ( num === arr.length ) {
+				clearInterval( obj.shake );
+				}
+				endFn && endFn();
+				}, 50);
+			}		
+		}
+	</script>
+	<body>
+		<img src="df未标题-2.gif" />
+	</body>
+</html>

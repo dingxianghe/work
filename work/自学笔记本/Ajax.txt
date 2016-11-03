@@ -1,0 +1,123 @@
+ajax : Asynchronous JavaScript and XML 异步JavaScript和XML
+
+用javascript异步形式去操作xml
+
+数据交互
+
+127.0.0.1  
+localhost
+
+<?php
+header('content-type:text/html;charset="utf-8"');
+error_reporting(0);
+
+$username = $_GET['username'];
+$age = $_GET['age'];
+
+//$_REQUEST
+$username = $_POST['username'];
+$age = $_POST['age'];
+
+echo "你的名字：{$username}，年龄：{$age}";	输出string对象
+
+echo json_encode($news);                        输出JSON对象
+
+try {
+	//代码尝试执行这个块中的内容,如果有错误，则会执行catch{}，	并且传入错误信息参数
+} catch (e) {
+	alert(e);
+}
+
+oBtn.onclick = function() {
+		
+		1.创建一个ajax对象
+			ie6以下new ActiveXObject('Microsoft.XMLHTTP')
+		*/
+		var xhr = null;
+
+		try {
+			xhr = new XMLHttpRequest();
+		} catch (e) {
+			xhr = new ActiveXObject('Microsoft.XMLHTTP');
+		}
+		//在地址栏输入地址
+		/*
+		open方法
+		参数
+		1.打开方式
+		2.地址
+		3.是否异步
+			异步:非阻塞 前面的代码不会影响后面代码的执行
+			同步:阻塞 前面的代码会影响后面代码的执行
+		*/
+
+get方式：参数加在地址后面  ？ 用&连接（缓存问题加时间戳，编码传输encodeURI））
+		xhr.open('get','get','2.get.php?username='+encodeURI('刘伟')+'&age=30&' + new Date().getTime(),true);
+		xhr.send();
+		
+post方式：参数放在send()里面传递，不过先申明数据类型（没有缓冲问题，无需编码）
+		xhr.open('post','2.post.php',true);	
+		xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+		//申明发送的数据类型
+		xhr.send('username=刘伟&age=30');
+
+		//等待服务器返回内容
+		/*
+			readyState : ajax工作状态
+			responseText : ajax请求返回的内容存放到这个属性下面
+			on readystate change : 当readyState改变的时候触发
+			status : 服务器状态，http状态码
+		*/
+		xhr.onreadystatechange = function() {
+			
+			if ( xhr.readyState == 4 ) {
+				if ( xhr.status == 200 ) {
+					alert( xhr.responseText );
+				} else {
+					alert('出错了,Err：' + xhr.status);
+				}
+			}
+			
+		}
+表单：数据的提交
+    	action : 数据提交的地址，默认是当前页面
+        method : 数据提交的方式，默认是get方式
+            1.get
+            	把数据名称和数据值用=连接，如果有多个的话，那么他会把多个
+		数据组合用&进行连接，然后把数据放到url?后面传到指定页面
+                url长度限制的原因，我们不要通过get方式传递过多的数据
+            2.post
+            	理论上无限制
+        enctype : 提交的数据格式，默认application/x-www-form-urlencoded
+    <form action="1.get.php" enctype="application/x-www-form-urlencoded">
+    	<input type="text" name="username" />
+        <input type="text" name="age" />
+        <input type="submit" value="提交" />
+    </form>
+
+
+//stringify : 可以把一个对象转成对应字符串
+//PSON.parse : 可以把字符串转成对应对象(严格的JSON格式)
+
+
+瀑布流要点：
+1.寻找最短的li；
+2.设置图片的宽高；
+3.滚动条滚动时触发更新下一页数据；
+4.加载完成后才加载下一批数据；加门
+
+留言本要点：
+1.检查有没有存储的cookie;用户是否处于登录状态
+2.根据返回的信息代码做相对应的事情，没有错误再操作数据
+3.要发送的内容可能含中文的需要编码发送
+4.新的留言放在最前面，请求的数据放在后面
+
+
+
+jsonp:跨域解决
+原理
+定义函数
+包含外部文件，在被包含的文件中执行调用定义好的函数
+参数的（数据）的实现
+问题：包含就调用，通过动态创建<script>实现按需调用
+问题：包含动态文件时可以通过一个接口实现按需生成调用函数名称

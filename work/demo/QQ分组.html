@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+		<style>
+			div{height: 500px;width: 200px;margin: auto;}
+			ul,li,h2{list-style: none;padding:0;margin: 0;}
+			#box li ul{display: none;}
+			#box,li,h2{border: 1px solid black;}
+			h2{background: no-repeat 3px center #21C618 url(img/ico1.gif);text-indent: 12px;}
+			.abc{background-color: #002952;background-image:url(img/ico2.gif);}
+		</style>
+		<script>
+			window.onload=function(){
+				var obox=document.getElementById('box');
+				var aul=obox.getElementsByTagName('ul');
+				var ah=obox.getElementsByTagName('h2');
+				var num=null;
+				var ab=null;
+				var arr=[];
+				for(var i=0;i<aul.length;i++){
+					num=aul[i].getElementsByTagName('li');
+					for(var j=0;j<num.length;j++){
+						arr.push(num[j])
+					}
+				}
+				num=0;
+				for(var i=0; i<ah.length;i++){
+					ah[i].index=i;
+					ah[i].onclick=function(){
+						this.className="abc"
+						aul[this.index].style.display="block"
+						if(this.index!=num){
+							for(var i=0; i<ah.length;i++){
+						ah[i].className=''
+						aul[i].style.display='none'	
+						num=this.index
+						}
+						this.className="abc"
+						aul[this.index].style.display="block"
+						}else{
+						this.className=''
+						aul[this.index].style.display="none"
+						num=null;
+						}
+					}
+				}
+				for(var i=0; i<arr.length;i++){
+					arr[i].index=i;
+					arr[i].onclick=function(){
+						this.className="def"
+						if(this.index!=ab){
+							for(var i=0; i<arr.length;i++){		
+							arr[i].style.background='';
+						}
+						ab=this.index
+						this.style.background='red';
+						}else{
+						this.style.background='';
+						ab=null;
+						}
+					}
+				}
+			}
+		</script>
+		
+	</head>
+	<body>
+		<div>
+		<ul id="box">
+			<li><h2 class="qqq">我的好友</h2>
+				<ul>
+					<li>特地方</li>
+					<li>特地方</li>
+					<li>特地方</li>
+					<li>特地方</li>
+					<li>特地方</li>
+					<li>特地方</li>
+				</ul>
+			</li>
+			<li><h2 class="qqq">我的坏友</h2>
+				<ul>
+					<li>特地方</li>
+					<li>特地方</li>
+					<li>特地方</li>
+					<li>特地方</li>
+					<li>特地方</li>
+					<li>特地方</li>
+				</ul>
+			</li>
+			<li><h2 class="qqq">我的基友</h2>
+				<ul>
+					<li>特地方</li>
+					<li>特地方</li>
+					<li>特地方</li>
+				</ul>
+			</li>
+		</ul>
+		</div>
+	</body>
+</html>

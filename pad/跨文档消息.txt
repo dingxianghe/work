@@ -1,0 +1,351 @@
+console.time(1)
+运行的程序
+console.timeEnd(1)
+然后可以在控制台看到这段程序的执行所用时间
+
+
+同域名底下不同页面之间的dom操作，直接获取该页面的window对象来进行操作：	
+
+<iframe id="myframe" src="2.iframe.html"></iframe>	}
+
+被iframe包含的页面的window对象:oMyIframe.contentWindow		
+oMyIframe.contentWindow.document.body.style.background = 'red';
+		
+操作包含本页面的父级页面对象；
+parent.document.body.style.background = 'green';
+		
+window : 当前窗口 （默认操作本页面）
+parent : 父级窗口（没有则为当前窗口）
+top : 顶级窗口
+
+
+window.open方法打开的页面	
+oBtn.onclick = function() {
+
+ window.open方法 返回被打开窗口的window对象
+var newWindow = window.open('4.window.open.html', '_blank');
+    newWindow.document.body.style.background = 'red';		
+}
+window.opener : 指用window.open方法打开当前页面的那个页面的window
+	window.opener.document.body.style.background = 'green';
+
+
+跨域下，通过postMesssge()发送消息来操作另一个页面
+
+postMessage : 可以通过这个方法给另外一个窗口发送信息
+		
+前面是需要接收消息的窗口的window对象
+
+oMyIframe.contentWindow.postMessage('1', 'http://www.b.com');
+
+第一个参数：发送的数据
+第二个参数：接收数据的域名｛带上协议｝
+
+
+message : 当窗口接收到通过postMessage发送过来的数据的时候触发
+
+window.addEventListener('message', function(ev) {
+
+	//message事件的事件对象下保存了发送过来的内容
+		ev.data : 发送过来的数据
+		ev.origin:
+		
+	if (ev.data == '1') {
+	document.body.style.background = 'red';
+	}//可以通过接收的数据来进行对应的操作
+		
+	}, false);
+
+		
+AJAX跨域下的解决问题
+
+在标准浏览器下，XMLHttpRequest对象已经是升级版本，支持了更多的特性，可以跨域了，但是，如果想实现跨域请求，还需要后端设置该域名的访问权限
+header('Access-Control-Allow-Origin:http://www.a.com');	//这是允许访问该资源的域
+
+标准浏览器	
+XMLHttpRequest : 推荐使用onload来监听响应状态
+
+IE78	
+XDomainRequest : IE如果想实现跨域请求，则需要使用另外一个对象去实现（带上http协议）		
+
+onload:发送数据成功后触发；
+		
+var oXD = new XDomainRequest();
+oXD.onload = function() {
+	alert(this.responseText);
+	}
+oXD.open('get','http://www.b.com/ajax.php', true);
+oXD.send();
+
+
+
+文件上传：
+
+<input type="file" name="file">
+
+oBtn.onclick = function() {
+		
+	alert(oMyFile.value);	//获取到的是file控件的value值，这个内容是显示给你看的文字，不是我们选择的文件
+		
+	oMyFile.files file控件中选择的文件列表对象
+		
+	我们是要通过ajax把oMyFile.files[0]数据发送给后端
+		
+	var xhr = new XMLHttpRequest();
+		
+	xhr.onload = function() {
+		alert('OK,上传完成');
+	}
+
+上传的进度条：		
+	upload:ajax下的对象，表示上传状态；
+	onprogress ：upload下的事件上传状态下触发；
+	ev.loaded ：onprogress 下的事件对象：表示总数据
+	ev.loaded ：onprogress 下的事件对象：表示已发送数据
+	
+	var oUpload = xhr.upload;
+		
+	oUpload.onprogress  = function(ev) {
+
+		var iScale = ev.loaded / ev.total;
+			
+		oDiv2.style.width = 300 * iScale + 'px';
+		oDiv3.innerHTML = iScale * 100 + '%';
+			
+	}
+		
+	xhr.open('post', 'post_file.php', true);
+	xhr.setRequestHeader('X-Request-With', 'XMLHttpRequest');
+
+
+FormData对象：下面有一个append的属性来转换数据成二进制的；
+		
+	var oFormData = new FormData();	//通过FormData来构建提交数据
+	oFormData.append('file', oMyFile.files[0]);
+	xhr.send(oFormData);
+		
+		
+	}
+
+
+
+搭建离线应用程序
+①服务器设置头信息 : 
+	AddType text/cache-manifest .manifest（随便加在哪里）
+	
+② html标签引入列表: 
+<html manifest=“xxxxx.manifest”></html>
+
+③写manifest文件 :  离线的清单列表
+ 	先写 :  CACHE MANIFEST
+	然后写需要存贮的文件名字
+
+
+
+
+Worker API
+
+在当前页面
+new Worker(‘后台处理的JS地址’)
+利用postMessage传输数据
+close()方法，立刻停止worker运行
+
+var w1 = new Worker('test.js');//建立线程
+
+w1.postMessage('hi');		//传送数据
+
+w1.onmessage = function(ev){	//处理传回来的数据
+	alert( ev.data );
+};
+
+在其他线程里面
+
+importScripts('randomArr.js');导入其他JS文件
+
+self.onmessage = function(ev){ 接收传输过来的数据
+	
+	var arr = randomArr(ev.data , ev.data/10);
+	
+	self.postMessage(arr); 返还数据回去
+	
+};
+
+
+Worker运行环境（支持的属性和方法有限）
+navgator  :  appName、appVersion、userAgent、platform
+location  :   所有属性都是只读的
+self  :  指向全局 worker 对象
+所有的ECMA对象，Object、Array、Date等
+XMLHttpRequest构造器
+setTimeout和setInterval方法
+
+
+HTML5其他功能(后两个只支持-webkit-内核)
+内容编辑（直接加在标签里面）
+contenteditable="true“
+语言输入
+<input type="text" x-webkit-speech />
+桌面提醒
+window.webkitNotifications.requestPermission();
+statue = window.webkitNotifications.checkPermission();
+var notification =window.webkitNotifications.createNotification("[imgurl]","Title","Body");
+notification.show();
+
+
+地理位置对象
+navigator.geolocation
+
+单次定位请求  
+navigator.geolocation.getCurrentPosition(function(position){
+请求成功函数
+经度 :	position.coords.longitude
+纬度 :  position.coords.latitude
+准确度 :  position.coords.accuracy
+海拔 :  position.coords.altitude
+海拔准确度 :  position.coords.altitudeAcuracy
+行进方向 :  position.coords.heading
+地面速度 : position.coords.speed
+时间戳 : new Date(position.timestamp)
+},function(position){
+请求失败函数
+失败编号  ：code
+0  :  不包括其他错误编号中的错误
+1  :  用户拒绝浏览器获取位置信息
+2  :  尝试获取用户信息，但失败了
+3  :   设置了timeout值，获取位置超时了
+
+},{
+	数据收集 :  json的形式
+	enableHighAcuracy  :  更精确的查找，默认false
+	timeout  :  获取位置允许最长时间，默认infinity
+	maximumAge :  位置可以缓存的最大时间，默认0
+})
+
+多次定位请求  :  watchPosition(像setInterval)
+移动设备有用，位置改变才会触发
+配置参数：frequency 更新的频率
+
+关闭更新请求  :  clearWatch(像clearInterval)
+百度地图API
+<script src="http://api.map.baidu.com/api?v=1.3"></script>
+
+
+
+
+
+本地存储
+
+Cookie
+数据存储到计算机中，通过浏览器控制添加与删除数据
+Cookie的特点
+存储限制
+域名100个cookie,每组值大小4KB
+客户端、服务器端，都会请求服务器（头信息）
+页面间的cookie是共享
+
+Storage
+
+window.sessionStorage
+窗口的临时存储，页面关闭，本地存储消失
+
+window.localStorage
+永久存储（可以手动删除数据）
+Storage的特点
+存储量限制 ( 5M )
+客户端完成，不会请求服务器处理
+sessionStorage数据是不共享、 localStorage共享
+
+Storage API
+window.localStorage.setItem(key，value):
+设置数据，key\value类型，类型都是字符串
+可以用获取属性的形式操作
+window.localStorage.getItem(key):
+获取数据，通过key来获取到相应的value
+window.localStorage.removeItem(key):
+删除数据，通过key来删除相应的value
+window.localStorage.clear():
+删除全部存储的值
+例子 :  保存注册信息
+
+存储事件:
+当数据有修改或删除的情况下，就会触发storage事件
+在对数据进行改变的窗口对象上是不会触发的
+Key : 修改或删除的key值，如果调用clear(),key为null
+newValue  :  新设置的值，如果调用removeStorage(),key为null
+oldValue :  调用改变前的value值
+storageArea : 当前的storage对象
+url :  触发该脚本变化的文档的url
+注：session同窗口才可以,例子：iframe操作
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

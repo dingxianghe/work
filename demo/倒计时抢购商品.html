@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	<style>
+		#box{
+			border: 1px solid black;
+			width:840px;
+			font:24px "微软雅黑";
+			height: 900px;
+		}
+		#nva{
+			margin: 20px;
+			margin-bottom:0px;
+		}
+		#boxx{
+			border-top: 2px solid black;
+			margin: 20px;
+			width:800px;
+			margin-top:0px ;
+			font-size: 16px;
+			position: relative
+		}
+		.box,.img1{
+			position: absolute;
+			width:180px;
+			margin: 10px;
+			opacity:1;
+			top:0px;
+			z-index: 1;
+		}
+		img{
+			width: 180px;
+			height: 200px;
+		}
+		.img1{
+			width: 178px;
+			z-index: 0;
+			height:350px;
+			opacity:0;	
+		}
+		.txt{
+			margin: 5px;
+			width:110px;
+			background: #C6C6C6;
+		}
+		.btn{
+			font-weight: 200;
+		}
+		.atr2{
+			color:red;
+		}
+		.p2,.str1,.atr2{
+			font-size: 14px;
+			margin: 3px;
+		}
+		.p1,.str1{
+			opacity: 0.7;
+		}
+		#zong{
+			color: red;
+		}
+		table{
+			margin-top:400px ;
+			display: inline-block;
+			border: none;
+		}
+		tr{
+			width:800px ;
+			background:#9C949C;	
+			margin-bottom: 3px;
+		}
+		#th1{width:30%;align:center;}
+		#th2{width:160px;align:right;}
+		#th3{width:50%;align:right;}
+		#tr1{font:20px/30px "微软雅黑";}
+		td img{
+			width:100px;
+			height: 70px;
+		}
+	</style>
+	<script src="js/miaov.js"></script>
+	<script>
+		window.onload=function(){
+			var atxt=document.getElementsByClassName('txt');
+			var abtn=document.getElementsByClassName('btn');
+			var abox=document.getElementsByClassName('box');
+			var ap1=document.getElementsByClassName('p1');
+			var ap2=document.getElementsByClassName('p2');
+			var aatr2=document.getElementsByClassName('atr2');
+			var aimg2=document.getElementsByClassName('img2');
+			var aimg1=document.getElementsByClassName('img1');
+			var zongjia=0;
+			
+			for(var i=0;i<abox.length;i++){
+				abox[i].style.left=i*200+'px';
+				aimg1[i].style.left=i*200+'px';
+				abtn[i].index=i;
+			}
+			for(var i=0;i<abox.length;i++){
+				abtn[i].onclick=function(){
+					var i=this.index;
+					woo(atxt[i],ap1[i],abox[i],aimg1[i],ap2[i],aatr2[i],aimg2[i])
+				}
+				
+			}
+			
+			function woo(atxt,ap1,abox,aimg1,ap2,aatr2,aimg2){
+			var	iNew = new Date(atxt.value);
+			var timer=setInterval(function(){
+			var	iNow = new Date();
+			var	t = Math.floor( ( iNew - iNow ) / 1000 );
+			if(t<0){t=0};
+			ap1.innerHTML='剩余'+toTwo(Math.floor(t/86400))+'天'+toTwo(Math.floor(t%86400/3600))+'时'+toTwo(Math.floor(t%86400%3600/60))+'分'+toTwo(t%60)+'秒'
+			if(t==0){			
+					shake(abox,'left',function(){
+					doMove(abox,'top',12,300);
+					doMove(aimg1,'opacity',0.1,1)
+					doMove(abox,'opacity',0.1,0,function(){
+					var a=ap2.innerHTML;
+					var b=too(parseInt(aatr2.innerHTML))
+					var c=aimg2.src
+					$('tab').innerHTML+='<tr><td>'+a+'</td><td>'+b+'</td><td><img src="'+c+'"/></td></tr>';
+					zongjia+=parseInt(aatr2.innerHTML)
+					$('zong').innerHTML=too(zongjia)+'元';	
+					})
+				})
+				clearInterval(timer)}
+			},1000)	}
+			
+			
+			
+			function too ( n ) {
+				return n +'.00'
+			}
+			function toTwo ( n ) {
+				return n < 10 ?  '0' + n : '' + n;
+			}	
+		}
+	</script>
+	</head>
+	<body>
+		<div id="box">
+			<p id=nva>限购时间</p>
+			<div id="boxx">
+				<div class="box">
+					<input type="text" class="txt" value="July 29,2016 21:47:0" />
+					<input type="button" class="btn" value="确定"/>
+					<p class="p1">剩余00天00时00分00秒</p>
+					<img class="img2" src="img/30.jpg"/>
+					<p class="p2">疯狂599，美的爆款英航是下班下拉门微波炉</p>
+					<strong class="str1">抢购价 $</strong>
+					<strong class="atr2">1.00</strong>
+				</div>
+				<img class="img1" src="img/shangpingxiajia.png"/>
+				<div class="box">
+					<input type="text" class="txt" value="July 29,2016 21:47:0"   />
+					<input type="button" class="btn" value="确定"/>
+					<p class="p1">剩余00天00时00分00秒</p>
+					<img class="img2" src="img/30.jpg"/>
+					<p class="p2">疯狂599，美的爆款英航是下班下拉门微波炉</p>
+					<strong class="str1">抢购价 $</strong>
+					<strong class="atr2">4143.00</strong>
+				</div>
+				<img class="img1" src="img/shangpingxiajia.png"/>
+				<div class="box">
+					<input type="text" class="txt" value="July 29,2016 21:47:0"   />
+					<input type="button" class="btn" value="确定"/>
+					<p class="p1">剩余00天00时00分00秒</p>
+					<img class="img2"  src="img/30.jpg"/>
+					<p class="p2">疯狂599，美的爆款英航是下班下拉门微波炉</p>
+					<strong class="str1">抢购价 $</strong>
+					<strong class="atr2">41244.00</strong>
+				</div>
+				<img class="img1" src="img/shangpingxiajia.png"/>
+				<div class="box">
+					<input type="text" class="txt"  value="July 29,2016 21:47:0"  />
+					<input type="button" class="btn" value="确定"/>
+					<p class="p1">剩余00天00时00分00秒</p>
+					<img  class="img2" src="img/30.jpg"/>
+					<p class="p2">疯狂599，美的爆款英航是下班下拉门微波炉</p>
+					<strong class="str1">抢购价 $</strong>
+					<strong class="atr2">4444.00</strong>
+				</div>
+				<img class="img1" src="img/shangpingxiajia.png"/>
+				<table id="tab">
+					<tr id="tr1">
+						<th id="th1">商品名称</th>
+						<th id="th2">价钱</th>
+						<th id="th3"></th>
+					</tr>
+				</table>
+				<strong>总价</strong> <strong id="zong">00.00元</strong> 
+			</div>
+			
+		</div>
+	</body>
+</html>

@@ -1,0 +1,161 @@
+面向对象的特点：继承，封装，多态；
+对象的组成：方法  属性
+
+array=eval(str) ;把一个字符串解析出相应的类型；
+
+this：当前的方法属于谁，this就是指谁
+
+不能再系统对象中随意附加方法、属性，否则会覆盖已有的方法、属性
+
+工厂模式构造对象：
+funtion 1212(){
+创建新对象var obj=new Object();  第一个O大写
+
+return obj;
+}
+
+function Joo（abc，jjj）{		//构造函数  构造器 用来构造对象的  模子
+	
+	//this->new出来的Joo对象
+	//构造函数伪装      调用父级的构造函数--为了继承属性  让父级的构造函数以为里面的this指向它
+	父级的构造函数名.call（this,abc,jjj）
+
+	this.abc=abc
+	this.jjj=jjj
+}
+//原型链     通过原型来继承父级的方法
+//父级的构造函数名。prototype=Joo。prototype；
+
+为了避免出现直接引用父级的prototype 所以要  
+for(var i in 父级的构造函数名。prototype)
+{
+	父级的构造函数名。prototype[i]=Joo。prototype[i]；
+}
+
+
+Joo.prototype.a=function(){		
+	alert(this.abc)
+}
+Joo.prototype.b=function(){
+	alert(this.jjj)
+}
+
+先从父级继承  然后再写自己要加的
+
+
+构造函数就等于类
+构造函数首字母大写
+
+Arrty.prototype.a=12    原型继承
+
+var arr=[1,2,3]
+
+arr.a=5                 构造对象
+
+delete arr.a       删除
+
+
+工厂模式的问题：
+1.没有new
+2.每个对象都有一套自己的函数（浪费资源）
+
+原型继承.prototype.
+
+相同的东西写到方法里，用原型继承~
+不同的东西写在
+
+注意写不同的东西的时候 注意要单独写出来 不要写在这一类对象的上面
+
+实例：instanceof                    判断arr是不是Arrty这个类的实例；
+alert(arr instanceof Arrty)     
+
+把面向过程改成面向对象：
+前提：
+1.前提：所有的东西都在onload里
+2.改写：不能有函数嵌套。可以有全局变量
+3.  	onload ---构造函数
+	全局变量--属性
+	函数------方法
+4改错：   this  
+	出问题的地方   1  定时器    2  事件
+			通过闭包、传参传递this
+
+
+json方式的面向对象 把方法包在一个json里：也叫命名空间 只能用一次
+
+
+本地对象（非静态对象）  需要new出来一个实例才能用
+	常用：Object、Function/Array/String/Boolean/Number/Date/RegExp/Error
+
+内置对象（静态对象）    不需要new   直接拿来就能用
+	常用：Math
+宿主对象(由浏览器提供的对象）
+	DOM   BOM
+
+
+
+
+正则表达式：/。。。/
+
+RegExp对象
+	JS风格——new RegExp(“a”, “i”)
+	perl风格——/a/i
+两种选项：
+i	忽略大小写
+g	查找出所有的字符
+
+var re=/[0-9]/
+查找    alert(re.search(str))       查找有几个  返回一个数组的长度
+查找	alert(re.test(str));        在str里面找到re则返回true  没有则返回false
+查找： str.match（‘DASH’）        查找有几个  返回一个数组
+替换   str.replace('ada','adsda')   将str里面的'ada'替换成'adsda'
+
+字符类【】
+任意字符：【】    【123】 只要出现里面任意一个字符都可以 	 例子：o[usb]t——obt、ost、out
+范围：    【a-z0-9】      只要出现从a到z 0到9之间的所有都可以    例子：id[0-9]——id0、id5
+排除：	   【^a】	  只要出现的除了a以外的所有字符都可以 	例子：o[^0-9]t——oat、o?t、o t
+
+|	或者
+。      任意字符
+\d      任意数字
+\w	任意数字 字母 下划线
+\s	所有空格 换行
+\D  \W  \S  就是除了上面的字符的（相反）
+
+{n,m}    最少n次，最多m次
+{n}      至少n次
+*	 任意次
+？	 零次或一次	{0,1}
++	 一次或任意次{1,}       必须要有
+{n}	 正好n次
+ ^  $    从行首开始  到行尾结束 
+
+偷小说：   /<[^<>]+>/g
+如检验邮箱：/^\w+@[0-9a-z]+\.[a-z]{2,4}$/
+去掉首尾空格：/^\s*|\s*$/g
+匹配中文：[\u4e00-\u9fa5]  
+单词边界：\b   /\baa\b/g      查找所有叫aa的单词   
+
+
+
+
+
+
+cookie : 存储数据，当用户访问了某个网站（网页）的时候，我们就可以通过cookie来像访问者电脑上存储数据
+	1.不同的浏览器存放的cookie位置不一样，也是不能通用的
+	2.cookie的存储是以域名形式进行区分的
+	3.cookie的数据可以设置名字的
+	4.一个域名下存放的cookie的个数是有限制的，不同的浏览器存放的个数不一样
+	5.每个cookie存放的内容大小也是有限制的，不同的浏览器存放大小不一样
+	
+	我们通过document.cookie来获取当前网站下的cookie的时候，得到的字符串形式的值，他包含了当前网站下所有的cookie。他会把所有的cookie通过一个分号+空格的形式串联起来
+	
+	如果我们想长时间存放一个cookie。需要在设置这个cookie的时候同时给他设置一个过期的时间
+	cookie默认是临时存储的，当浏览器关闭进程的时候自动销毁
+*/
+document.cookie = '名字=值';
+
+document.cookie = 'username=leo';
+document.cookie = 'age=32';
+
+//内容最好编码存放,encodeURI

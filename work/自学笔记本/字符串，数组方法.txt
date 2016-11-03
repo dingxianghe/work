@@ -1,0 +1,163 @@
+var str = '妙味课堂-WWW.miaov.com';
+
+str.charAt(1);			// '味'（找到字符串str的第一个字符）
+str.charCodeAt(1);		// 21619（找到字符串str的第一个字符的编码）
+String.fromCharCode(22937, 21619);	// '妙味'（通过用字符的编码创建一个相对应的字符串）
+
+str.indexOf('m', 4);			// 9（按从前往后的顺序从第四个往后开始查找字符串‘m’的位置，如果没有则返回-1）
+str.lastIndexOf('o');			// 16（按从后往前的顺序查找字符串‘o’的位置，如果没有则返回-1）
+
+'1000' < '2'			// true    （）字符串比较是从第一个字符开始比较
+'1000' > 2			// true    （）字符串和数字之间的比较会都转换成数字然后比较
+
+str.substring(0, 4);			// '妙味课堂'   （截取0-4之间的字符组成字符串，只能从0开始）
+str.slice(-3);			// 'com'（也是截取，如果为负数则默认从负数位开始到最后一位组成字符串）
+
+str.toUpperCase();			// '妙味课堂-WWW.MIAOV.COM' （大写转换）
+str.toLowerCase();			// '妙味课堂-www.miaov.com'（小写转换）
+
+切割
+str.split('.', 2);			// [ '妙味课堂-WWW', 'miaov' ] （字符串切割，只保留前2个）
+
+var arr = [ 'www', 'miaov', 'com' ];
+arr.join('aaa');			// 'www.miaov.com'（字符串拼接）
+
+
+var arr = [ 'TM', '钟毅', '张森', '杜鹏', 'Leo' ];
+arr.splice( 1 ,2 , 'aaaaaa','dasa' )      从第一个元素开始删除2个元素 添加后面的字符串（可以是多个）删除、替换、添加
+					只有在删除某个元素的时候才有返回值
+var arr1 = [ 1,2,3,4,5,6 ];
+ arr1.reverse();                             倒换数组顺序
+
+var str = 'abcdef';
+ alert(str.split('').reverse().join(''));    字符串倒换顺序 分割-倒序-拼接
+
+
+arr.push( 'abc' ) ;    往数组的后面塞值 
+arr.pop()		删除数组最后一个值 
+
+arr.unshift( 0 ) ;	往数组的前面塞值	
+arr.shift()		删除数组第一个值	
+
+
+
+var json2 = { 'name' : 'miaov' };  安全格式:把JSON里面的属性名加上引号作为一个安全格式
+
+// alert( json2.name );
+// alert( json2['name'] );       把点改成中括号的时候里面的属性名要加上引号
+json2.name = '妙味';		不仅可以提取里面的值来用也可以把修改里面的值								
+json2['name'] = 'miaov';
+
+var json3 = { abc : 123, xyz : '' };
+//  { [], [], [] }		[ {}, {}, {} ]
+var arr = [ { 'name' : 'TM', 'age' : 23 }, { 'name' : 'leo', 'age' : 32 } ];
+// alert( arr[0].name + '今年有' + arr[1]['age']  );
+ 不管是数组套现再JSON里 还是JSON套现再数组里  只要注意提取属性的值就好了
+
+var json5 = {
+	'url' : [ 'img/1.png', 'img/2.png', 'img/3.png', 'img/4.png' ],
+	'text' : [ '小宠物', '图片二', '图片三', '面具' ]
+};
+ 
+for ( var attr in json5 ) {         历遍JSON的所有属性
+	for ( var i=0; i < json5[attr].length; i++ ) {
+		alert( json5[attr][i] );
+	}
+}
+JSON没有长度length所以只能用for in 来进行循环操作  for in 也可以用在数组里面for (var i in arr){}
+
+
+
+<script>
+var arr = [ 1,2,2,4,2 ];
+
+for ( var i=0; i<arr.length; i++ ) {
+	for ( var j=i+1; j<arr.length; j++ ) {
+		if ( arr[i] == arr[j] ) {
+			arr.splice( j, 1 );          数组去重~   遇到相同的就删除这个
+			j--;
+		}
+	}
+}
+
+
+
+<script>
+var arr = [ 'c', 'd', 'a', 'e' ];
+ arr.sort();					字符排序~  按字符编码来排
+
+var arr2 = [ 4,3,5,5,76,2,0,8 ];
+ arr2.sort();	                                默认按照字符串的大小比较来排序
+
+
+arr2.sort(function ( a, b ) {
+	return a - b;				加入一个函数 来用数字类型比较 是从大到小~ 还是从小到大							
+});
+
+
+var arrWidth = [ '345px', '23px', '10px', '1000px' ];
+
+arrWidth.sort(function ( a, b ) {
+	return parseInt(a) - parseInt(b);        用parseInt()将a,b元素转换成数字类型再比较大小
+});
+
+
+
+
+
+<script>
+
+// var arr = [ 1,2,3 ];
+// var arr = new Array(1,2,3);    如果括号里面是一个数字则解析为数组长度 如果为字符串则解析为内容
+
+var arr = [ 'aaa',2,3 ];
+// alert( arr.length );			// 3
+// arr.length = 0;
+// arr = [];                         数组的长度是可读写的~ 直接赋值0可以清空数组
+// alert( arr );
+
+var str = 'aaaaa';                    字符串的长度是不可以写的~ 
+// str.length = 1;
+
+
+var arr = [ 1,2,3,4,5,6,7,8 ];
+
+arr.sort(function ( a, b ) {
+	return Math.random() - 0.5;		随机产生正值和负值 来打乱数组
+});
+
+
+
+var arr1 = [ 1,2,3 ];
+var arr2 = [ 4,5,6 ];
+var arr3 = [ 7,8,9 ];
+
+arr1.concat( arr2, arr3 ) ;             把三个数组拼合起来一个新的数组
+
+
+
+<script>
+Math.random()                    		产生一个0~1之间的小数
+
+Math.round(3.4)  				四舍五入取整
+
+Math.ceil（）					向上取整
+
+// x ~ y
+var x = 3;
+var y = 49;
+// alert( Math.round( Math.random()*(y-x) + x ) );
+
+// 0~x
+// alert( Math.round( Math.random()*x) );
+
+// 1~x
+alert( Math.ceil( Math.random()*x) );
+
+
+// 课上小练习：
+// 随机产生 100 个从 0 ~ 1000 之间不重复的整数
+// var str = 'aaasdlfjhasdlkfs';
+// indexOf('s') —— 为数组编写该方法：indexOf('img/1.jpg')
+
+

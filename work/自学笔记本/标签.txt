@@ -1,0 +1,204 @@
+外部样式表<link href="style.css"rel="stylesheet"/>
+
+JPG：不支持透明半透明，所有空白区域填充白色 网页中的大图，高清图（体积大）
+GIF：支持透明，不支持半透明                 网页中的小图标（动画图片）
+png8：支持透明，不支持半透明                网页中的小图标
+png24：支持透明，也支持半透明               图像中存在半透明效果的图片
+section 版块 用于划分页面上的不同区域,或者划分文章里不同的节
+
+header 页面头部或者版块（section）头部 
+
+footer 页面底部或者（section）底部
+
+nav 导航 （包含链接的的一个列表）
+
+
+article	用来在页面中表示一套结构完整且独立的内容部分
+可以用来呈现论坛的一个帖子，杂志或报纸中的一篇文章，一篇博客，用户提交的评论内容，可互动的页面模块挂件等。
+
+aside 元素标签可以包含与当前页面或主要内容相关的引用、侧边栏、广告、nav元素组，以及其他类似的有别与主要内容的部分
+	1，被包含在<article>中作为主要内容的附属信息部分，其中的内容 以是与当前文章有关的引用、词汇列表等
+	2，在<article>之外使用，作为页面或站点全局的附属信息部分；最典型的形式是侧边栏(sidebar)，其中的内容可以是友情链接、附属导航或广告单元等。
+
+dl 定义列表
+dt 定义列表的项目	
+dd 对dt展开的描述扩展	
+time 时间
+img 图片<单标签/>
+
+
+表格标签：	
+table 表格	
+thead 表格头	
+tbody 表格主体	
+tr 表格行	
+th 元素定义表头	
+td 元素定义表格单元表格样式重置
+     table{border-collapse:collapse;} 单元格间隙合并
+     th,td{padding:0;}重置单元格默认填充
+
+colspan  属性规定单元格可横跨的列数。	
+   <td colspan="2"></td>rowspan  属性规定单元格可横跨的行数。	
+   <td rowspan="2"></td>
+
+iframe  通过一个窗口引入新的页面；
+<iframe id="myframe" src="2.iframe.html"></iframe>
+
+
+form   表单
+<input type="…… " name="" value="" /> 
+text           文本框
+password       密码框
+radio          单选选项
+checkbox       复选选项
+submit         提交按钮
+reset          重置按钮
+button         按钮
+image          图片按钮
+file           上传按钮
+hidden         不可见的字段
+label  标签为 input 元素定义标注	
+<input type="checkbox" name="" id="a"/>
+     <label for="a">……</label>
+checked  在页面加载时默认选定的 input 元素。	
+     <input type="checkbox" name="" checked/>
+disabled  属性规定应该禁用 input 元素。   
+     <input type="checkbox" name="" disabled/>
+select/option   下拉选框	 
+   对高度的支持不兼容；
+
+textarea      文本域	
+   各个浏览器下的默认滚动条显示不兼容	
+   css3新增 resize 调整尺寸属性；
+默认 < 类型 < class < id < style(行间) < !important
+ !important  提升样式优先级权重
+
+
+
+内嵌(内联、行内)的特征	
+      1、同排可以继续跟同类的标签	
+      2、内容撑开宽度	
+      3、不支持宽高	
+      4、不支持上下的margin	
+      5、代码换行被解析display：inline-block; <block 显示块> <inline显示内嵌>
+特性：1、块在一行显示；
+      2、行内属性标签支持宽高；
+      3、没有宽度的时候内容撑开宽度；
+      4、标签之间的换行间隙被解析（问题） 
+      5、ie6 ie7不支持块属性标签的inline-block（问题）
+
+
+display:none（隐藏）/ block(显示）
+
+float/文档流float:left | right | none | inherit;      左边    右边   没有    继承文档流是文档中可显示对象在排列时所占用的位置。
+浮动的定义：使元素脱离文档流，按照指定方向发生移动，遇到父级边界或者相邻的浮动元素停了下来。
+
+  1、块在一排显示  2、内联支持宽高	
+  3、默认内容撑开宽度     
+  4、脱离文档流	
+  5、提升层级半层
+
+clear:left | right | both | none | inherit；元素的某个方向上不能有浮动元素	
+clear:both;  在左右两侧均不允许浮动元素。
+
+after伪类 清浮动方法（现在主流方法）
+.clear:after { content:''; display:block; clear:both; }
+.clear { zoom:1; }
+
+after伪类： 元素内部末尾添加内容；		
+:after{content"添加的内容";} IE6，7下不兼容
+
+zoom 缩放 		
+a、触发 IE下 haslayout，使元素根据自身内容计算宽高。		
+b、FF 不支持；
+
+overflow:hidden 清浮动方法；	
+问题：需要配合 宽度 或者 zoom 兼容IE6 IE7；
+overflow:  scroll | auto | hidden；	
+overflow:hidden;溢出隐藏（裁刀！）
+
+BFC (block formatting context)  标准浏览器 	
+   a、float的值不为none。	
+   b、overflow的值不为visible。	
+   c、display的值为table-cell, table-caption, inline-block中的任何一个。	
+   d、position的值不为relative和static。     
+   e、width|height|min-width|min-height:(!aotu)
+
+haslayout      IE浏览器         
+   a、writing-mode:tb-rl           
+   b、-ms-writing-mode:tb-rl           
+   c、zoom:(!normal)
+
+
+position:fixed； 固定定位	
+  与绝对定位的特性基本一致，差别是始终相对整个文档进行定位；	
+  问题：IE6不支持固定定位；
+
+遮罩弹窗（优酷弹窗）
+   标准 不透明度：  opacity:0~1; 
+   IE 滤镜：        filter:alpha(opacity=0~100); 
+
+希望把某个元素移除你的视线：
+
+  1、display:none;	显示为无
+  2、visibility:hidden;	隐藏
+  3、width \ height
+  4、透明度
+  5、left \ top
+  6、拿一个白色DIV盖住它
+  7、margin负值
+  ……
+
+
+改变类型的函数~ IE6.7.8不支持~  只能改成隐藏~显示~
+IE（styleFloat）   非IE(cssFloat)
+
+变量命名：一个元素前面加o   数组前面加a  	
+
+
+arrLi.push( aLi[j] ); 往arrli数组里面添加ali的第J个元素；
+
+
+函数（）；
+ECMAScript：标准、核心
+HTML 标签类型：block、inline、inline-block、table……
+JS中的数据类型：数字（number）、字符串(string)、布尔(boolean)、函数、对象(obj、[]、{}、null)、未定义（undefined)
+
+
+数组里面的元素可以改 arr[2]=235;
+数组里面的元素还可以在后面加 arr.push(5,6,5);
+
+
+显式类型转换（强制类型转换）：
+
+Number转换字符串为数字 空格为0 true-1 false-0 数组空为0，里面有一个元素为1  null为0 （整体转换）
+parseInt（）转换为整数，	还可以转换为8进制 16进制（a,16)
+parseFloat（）转换为小数；
+Math.floor(s/60)            对（）里面的数字取整；向下取整
+Math.sqrt();     开方
+Math.asin();	输入sin值 返回弧度
+Math.sin();	输入弧度，得出sin值
+把角度转为弧度    弧度=角度*Math.PI/180;
+
+隐式类型转换：
++	      200 + '3'		变成字符串
+- * / %	     '200' - 3          变成数字
+++ --				变成数字
+> < 		数字的比较 、字符串的比较（比第一个值）
+!	取反	把右边的数据类型转成布尔值
+==		字符串转换为数字
+
+1.NaN：not a number 不是个 数字 的 数字类型
+2.一旦写程序中出现：NaN  肯定进行了非法的运算操作
+3.NaN 是 false
+4.NaN 与自己都不相等！！
+
+
+isNaN();通过Number()来判断~//不是数字true 是数字则是false
+
+
+重用代码：
+1、尽量保证 HTML 代码结构一致，可以通过父级选取子元素
+2、把核心主程序实现，用函数包起来
+3、把每组里不同的值找出来，通过传参实现
+

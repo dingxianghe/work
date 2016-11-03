@@ -1,0 +1,167 @@
+ 作用域：
+// 域：空间、范围、区域……
+// 作用：读、写	
+全局变量、全局函数  自上而下
+函数                由里到外
+浏览器：“JS解析器”
+1）“找一些东西”：var  function 参数  a = ...
+								所有的变量，在正式运行代码之前，都提前赋了一个值：未定义
+fn1 = function fn1(){ alert(2); }
+								所有的函数，在正式运行代码之前，都是整个函数块
+
+JS 的预解析
+
+遇到重名的：只留一个
+变量和函数重名了，就只留下函数
+								
+2）逐行解读代码：
+表达式：= + - * / % ++ -- ! 参数……
+表达式可以修改预解析的值！
+
+// FF 不能对{}里面的函数进行预解析
+if( true ){
+function fn1(){
+	alert(123);
+}
+	
+
+Math.floor(s/60)            对（）里面的数字取整；
+var s = 3605;			// 秒
+alert( Math.floor(s/60) + '分' + s%60 + '秒'  );
+
+
+
+判断的另外一种写法                if   swith
+
+switch( str ){
+	case 'js' : 
+		alert( 'js' ); break;
+	case 'html' : 
+		alert( 'html' ); break;
+	default :
+		alert( str );
+}
+
+
+	另外一种循环：   for    while
+var i=0;
+while (i<3){
+	alert(i);
+	i++;
+}
+for(var i=0; i<6; i++){
+	if( i == 4 ){
+// break;	/跳出
+continue;	// 跳过
+	}
+	// alert(i);
+}
+for(var attr in json){
+	每一个值：json[attr]
+	循环操作对象下的每一个属性
+}
+
+
+
+// 当函数的参数个数无法确定的时候：用 arguments
+// alert( sum( 1,2,3 ) );				// 6
+// alert( sum( 1,2,3,4 ) );			// 10
+function sum (){
+	var n = 0;
+	for( var i=0; i<arguments.length; i++ ){
+		n += arguments[i];
+	}
+	return n;
+}
+
+/*
+	系统时间对象
+*/
+// alert( new Date() );		// 当前系统的时间对象
+
+// myTime typeof   object
+	
+	setInterval( fnTime, 1000 );
+	
+	function fnTime () {
+	
+		var myTime = new Date();
+		
+		// number
+		var iYear = myTime.getFullYear();		年
+		var iMonth = myTime.getMonth()+1;		月
+		var iDate = myTime.getDate();			日
+		var iWeek = myTime.getDay();			星期
+		var iHours = myTime.getHours();			时
+		var iMin = myTime.getMinutes();			分	
+		var iSec = myTime.getSeconds();			秒
+		var str = '';
+		
+		if( iWeek === 0 ) iWeek = '星期日';
+		if( iWeek === 1 ) iWeek = '星期一';
+		if( iWeek === 2 ) iWeek = '星期二';
+		if( iWeek === 3 ) iWeek = '星期三';
+		if( iWeek === 4 ) iWeek = '星期四';
+		if( iWeek === 5 ) iWeek = '星期五';
+		if( iWeek === 6 ) iWeek = '星期六';
+		
+	时间显示：str = iYear+ '年' +iMonth+'月'+iDate+'日 '+iWeek+' '+ toTwo(iHours)+' : '+ toTwo(iMin)+' : '+ toTwo(iSec);
+			
+function toTwo ( n ) {
+	return n < 10 ?  '0' + n : '' + n;                 把5变成05
+}
+	
+	function fnTime () {
+	
+		var myTime = new Date();
+		var iHours = myTime.getHours();
+		var iMin = myTime.getMinutes();
+		var iSec = myTime.getSeconds();
+		var str = toTwo(iHours)+toTwo(iMin)+toTwo(iSec);   时分秒
+		
+		oP.innerHTML = str;
+				
+		for ( var i=0; i<str.length; i++ ) {
+			aImg[i].src = 'img/' + str.charAt(i) + '.JPG';
+		}
+			//str.charAt(i)   字符串str里面的第i个字符的值
+	}
+};
+
+<script>
+// 现在的时间点（在变）
+// 未来的时间点（不变）
+var iNow = new Date();
+// var iNew = new Date( 2013, 10, 27,  21,56,0  );数字
+
+var iNew = new Date( 'November 27,2013 22:3:0' ); 字符串 需要从文本中提取
+
+var t = Math.floor((iNew - iNow)/1000);
+// 毫秒 - 秒
+var str = Math.floor(t/86400)+'天'+Math.floor(t%86400/3600)+'时'+Math.floor(t%86400%3600/60)+'分'+t%60+'秒';
+
+alert( str );
+
+// 天：Math.floor(t/86400)
+// 时：Math.floor(t%86400/3600)
+// 分：Math.floor(t%86400%3600/60)
+// 秒：t%60
+
+// 数字形式：new Date( 2013,4,1,9,48,12 );
+// 字符串形式：new Date('June 10,2013 12:12:12');
+
+// January、February、March、April、May、June、
+// July、August、September、October、November、December
+</script>
+<script>
+
+/*
+var t =  Math.floor( new Date().getTime()/1000 );
+alert( Math.floor(t/86400)+'天'+Math.floor(t%86400/3600)+'时'+Math.floor(t%86400%3600/60)+'分'+t%60+'秒' );
+*/
+
+	
+未来的时间	iNew = new Date(aInp[0].value);
+现在的时间	iNow = new Date();
+还剩多久	t = Math.floor( ( iNew - iNow ) / 1000 );
+			

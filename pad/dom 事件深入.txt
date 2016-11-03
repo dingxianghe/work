@@ -1,0 +1,330 @@
+第一课   DOM操作
+
+DOM : Document Object Model 文档对象模型
+文档对象模型：定义 为了能够让程序(js)去操作页面中的元素元素.
+childNodes : 只读 属性 子节点列表集合
+	标准下：包含了文本和元素类型的节点，也会包含非法嵌套的子节点
+	非标准下：只包含元素类型的节点，ie7以下不会包含非法嵌套子节点
+			
+childNodes只包含一级子节点，不包含后辈孙级以下的节点
+元素.nodeType   : 只读 属性 当前元素的节点类型 元素节点 属性节点 文本节点
+
+元素.attributes : 只读 属性 属性列表集合 
+
+元素.children   : 只读 属性 子节点列表集合
+	标准下  ：只包含元素类型的节点
+	非标准下：只包含元素类型的节点
+元素.firstChild : 只读 属性 第一个子节点
+	标准下：firstChild会包含文本类型的节点
+	非标准下：只包含元素节点
+
+元素.firstElementChild : 只读 属性 标准下获取第一个元素类型的子节点	非标准下不认识这个操作
+
+兼容处理：
+元素.lastChild || 元素.lastElementChild 最后一个子节点
+元素.nextSibling || 元素.nextElementSibling 下一个兄弟节点
+元素.previousSibling || 元素.previousElementSibling 上一个兄弟节点
+
+元素.parentNode : 只读 属性 当前节点的父级节点
+元素.offsetParent : 只读 属性 离当前元素最近的一个有定位属性的父节点
+	如果没有定位父级，默认是body
+	ie7以下，如果当前元素没有定位默认是body，如果有定位则是html
+	ie7以下，如果当前元素的某个父级触发了layout，那么offsetParent就会被指向	
+	到这个触发了layout特性的父节点上	
+
+alert( document.getElementById('div2').currentStyle.hasLayout )  true!
+
+
+元素.offsetLeft : 只读 属性 当前元素到定位父级的距离（偏移值）
+			到当前元素的offsetParent的距离	
+
+元素.offsetHeight:当前元素的高 	
+    
+	 特例：ie7以下：如果自己没有定位，那么offsetLeft[Top]是到body的距离
+				(无视定位父级）
+
+width height（宽高）
+	style.width : 样式宽       width
+	clientWidth : 可视区宽     width + padding
+	offsetWidth : 占位宽	   width + padding + border  	
+
+function getPos(obj) {
+		
+		var pos = {left:0, top:0};
+		
+		while (obj) {
+			pos.left += obj.offsetLeft;
+			pos.top += obj.offsetTop;
+			obj = obj.offsetParent;
+		}
+		
+		return pos;
+		
+	}
+元素.getAttribute(属性名称); 方法 获取指定元素的指定属性的值
+	alert( oText.getAttribute('value') );
+	
+元素.setAttribute(属性名称，属性值); 方法 给指定元素指定的属性设置值
+	oText.setAttribute( 'value', 'hello' );
+	
+元素.removeAttribute(属性名称); 方法 移除指定的元素的指定的属性
+	oText.removeAttribute( 'value' );
+	
+	1.用.和[]的形式无法操作元素的自定义属性
+	  getAttribute可以操作元素的自定义属性
+   	  oText.getAttribute('_name_')
+
+	2.可以获取元素属性实际的值
+	  ie7下还是会返回资源的绝对路径	
+         oImg.getAttribute('src') 
+
+document.createElement(标签名称); 创建元素
+父级.removeChild(要删除的元素); 删除元素
+父级.appendChild(要添加的元素) 方法 追加子元素	
+父级.insertBefore(新的元素，被插入的元素) 方法 在指定元素前面插入一个新元素
+	在ie下如果第二个参数的节点不存在，会报错
+	标准浏览器下如第二个参数的节点不存在，则会以appendChild的形式进行添加	
+父级.replaceChild(新节点，被替换节点) 替换子节点
+appendChild,insertBefore,replaceChild都可以操作动态创建出来的节点，也可以操作已有节点	
+
+
+第二课  ：表单操作
+
+获取表单中一个元素  表单.元素的name
+如：<input type="text" id="text1" name="username" value="" />
+    alert( oForm.username.value )
+
+oForm.sex[0].checked 为true则为选中  false则未选中
+
+/*for (var attr in oForm.sex) {
+   console.log(attr + ' = ' + oForm.sex);
+}*/
+
+onchange事件 : 当值发生改变的时候触发
+	
+text : 当光标离开元素的时候再去判断值是否发生了变化，如果发生了变化则触发
+
+	/*oForm.username.onchange = function() {
+		alert('值变了');
+	}*/
+onsubmit 事件 : 当表单被提交的时候
+submit()      : 方法  直接提交表单
+	
+	oForm.onsubmit = function() {
+		
+		if (this.username.value == '') {
+			alert('请填写用户名');
+			return false;
+		}
+onreset 事件 : 当表单要重置的时候触发
+confirm （‘确定么’）：确认对话框     确定返回true  取消返回false
+	oForm.onreset = function() {
+		return confirm('你确定要重置？');
+	}	
+console.log(）把（）里面的元素显示在控制台
+
+
+
+
+BOM : Browser Object Model 浏览器对象模型
+
+open(页面的地址url，打开的方式)   ：打开新窗口
+//open(地址默认是空白页面，打开方式默认新窗口) 打开一个新窗口
+//window.open('http://www.baidu.com', '_self');
+//返回值 返回的新开页面的window对象
+可以直接操作返回的页面对象 
+
+window.close()  ：关系新窗口     前面的window指谁就关闭谁 
+
+window.navigator.userAgent : 当前浏览器的一大串信息
+
+通过 window.navigator.userAgent.indexOf('MSIE') != -1 来判断是什么浏览器
+
+window.location  :  浏览器地址信息
+window.location.href   = window.location内容
+window.location.search = url?后面的内容
+window.location.hash   = url#后面的内容
+
+窗口尺寸：
+document.documentElement.clientWihth    ：文档宽
+document.documentElement.clientHeight   ：文档高
+
+
+兼容处理：
+document.documentElement.scrollTop || document.body.scrollTop    ：上滚动距离
+(在谷歌下，文档的上滚动距离的元素应该是body，其他浏览器则是documentElement）
+
+
+元素.scrollHeight                       : 内容实际宽高
+document.body.offsetHeight    		：
+ie : 如果内容没有可视区高，那么文档高就是可视区
+
+//onscroll : 当滚动条滚动的时候触发
+
+//onresize : 当窗口大小发生变化的时候触发
+
+//Math.max();返回数值参数中最大的一个值
+//Math.min();返回数值参数中最小的一个值
+
+
+
+第三课  焦点事件
+
+焦点 : 使浏览器能够区分用户输入的对象，当一个元素有焦点的时候，那么他就可以接收用户的输入。
+我们可以通过一些方式给元素设置焦点
+	1.点击
+	2.tab
+	3.js
+	
+不是所有元素都能够接收焦点的.能够响应用户操作的元素才有焦点
+
+onfocus 事件: 当元素获取到焦点的时候触发
+onblur  事件: 当元素失去焦点的时候触发
+
+加（）为方法
+obj.focus()  给指定的元素设置焦点
+obj.blur()   取消指定元素的焦点
+obj.select() 选择指定元素里面的文本内容
+
+obj.onblur=function(){}     失去焦点事件
+
+
+event : 事件对象 , 当一个事件发生的时候，和当前这个对象发生的这个事件有关的一些详细的信息都会
+	被临时保存到一个指定地方-event对象，供我们在需要的调用。飞机-黑匣子
+
+事件对象必须在一个事件调用的函数里面使用才有内容
+事件函数：事件调用的函数，一个函数是不是事件函数，不在定义的决定，而是取决于这个调用的时候
+//fn1();	        //不是事件调用的函数
+document.onclick = fn1;	//是事件调用的函数，所以event有内容
+
+
+兼容
+ie/chrome : event是一个内置全局对象
+标准下    : 事件对象是通过事件函数的第一个参数传入
+   function fn1(ev){ var ev=ev||event;}
+
+如果一个函数是被事件调用的那么，这个函数定义的第一个参数就是事件对象
+  
+
+ev.clientX[Y] : 当一个事件发生的时候，鼠标到页面可视区的距离（没有单位的）
+
+onmousemove : 当鼠标在一个元素上面移动的触发  移动的时候不断的触发事件
+*/
+
+
+
+事件冒泡 : 当一个元素接收到事件的时候，会把他接收到的所有传播给他的父级，一直到顶层window.事件冒泡机制
+
+event.cancelBubble = true;  阻止冒泡 : 当前要阻止冒泡的事件函数中调用 
+移入移出的时候可以让父级去做这件事情
+
+给一个对象绑定两个函数  用赋值的形式会覆盖前一个函数
+如果要绑定两个不同的函数可以用：
+ie：obj.attachEvent(事件名称，事件函数);
+	1.没有捕获
+	2.事件名称有on
+	3.事件函数执行的顺序：标准ie-》正序   非标准ie-》倒序
+	4.this指向window
+标准：obj.addEventListener(事件名称，事件函数，是否捕获);
+	1.有捕获
+	2.事件名称没有on  例：onclick要改成click
+	3.事件执行的顺序是正序
+	4.this触发该事件的对象
+  是否捕获 : 默认是false    false:冒泡 true：捕获
+
+取消函数
+如果采用直接赋值的方法绑定的函数，可以直接赋值为null来取消；
+ie：obj.detachEvent(事件名称，事件函数);
+标准：obj.removeEventListener(事件名称，事件函数，是否捕获);
+
+call 函数下的一个方法，call方法第一个参数可以改变函数执行过程中的内部this的指向，call方法第
+	二个参数开始就是原来函数的参数列表,所以依旧可以传参。
+fn1.call(null, 10, 20);	//调用函数fn1	fn1() == fn1.call()
+
+
+关于捕获：标准才有：obj.addEventLilstener(事件名称，事件函数，是否捕获);
+先捕获 再冒泡
+
+
+键盘事件：
+ev.keyCode: 按键的值   如回车的按键值为 ev.keyCode==12   作为判断条件来用
+是否要按住ctrl键  可以再加一个   &ev.ctrlKey作为判断条件 为true则为按住状态
+
+
+
+事件的默认行为：
+当前的默认事件是由什么事件触发的，然后在这个事件的处理函数中  return false;就可以了
+
+oncontextmenu:右键菜单事件，当右键菜单（环境菜单）显示出来的时候触发
+
+aInput[0].setCapture();	//设置全局捕获 ，当我们给一个元素设置全局捕获以后，那么这个元素就会
+监听后续发生的所有事件，当有事件发生的时候，就会被当前设置了全局捕获的元素所触发
+	
+	/*
+	ie : 有，并且有效果
+	ff : 有，但是没效果
+	chrome : 没有
+	*/
+
+/*鼠标滚轮事件	ie/chrome : onmousewheel
+		event.wheelDelta
+			上：120
+			下：-120
+		
+	firefox : DOMMouseScroll 必须用addEventListener
+		event.detail
+			上：-3
+			下：3
+			
+	return false阻止的是  obj.on事件名称=fn 所触发的默认行为
+	addEventListener绑定的事件需要通过event下面的
+	preventDefault()阻止触发的默认行为
+
+	*/oDiv.onmousewheel = fn;
+	
+	if (oDiv.addEventListener) {
+		oDiv.addEventListener('DOMMouseScroll', fn, false);
+	}
+	
+	//alert(2);
+	
+	function fn(ev) {
+		//alert(1);
+		
+		var ev = ev || event;
+		
+		//alert( ev.wheelDelta );
+		
+		//alert(ev.detail)
+		
+		var b = true;
+		
+		if (ev.wheelDelta) {
+			b = ev.wheelDelta > 0 ? true : false;
+		} else {
+			b = ev.detail < 0 ? true : false;
+		}
+		
+		//alert(b);
+		
+		if ( b ) {
+			this.style.height = this.offsetHeight - 10 + 'px';
+		} else {
+			this.style.height = this.offsetHeight + 10 + 'px';
+		}
+		
+		if (ev.preventDefault) {
+			ev.preventDefault();
+		}
+		
+		return false;
+		
+	}
+	
+	}
+		
+		return false;
+		
+	}
+	
+	

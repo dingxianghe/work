@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+@-webkit-keyframes  show
+{
+	0%{
+		 -webkit-transform:rotateX(-120deg);
+		 box-shadow:inset 0 0 0 20px rgba(0,0,0,1);
+	}
+	50%{
+		 -webkit-transform:rotateX(30deg);
+		 box-shadow:inset 0 0 0 20px rgba(0,0,0,0.3);
+	}
+	60%{
+		 -webkit-transform:rotateX(-20deg);
+	}
+	70%{
+		 -webkit-transform:rotateX(20deg);
+		 
+	}
+	80%{
+		 -webkit-transform:rotateX(-10deg);
+		  
+	}
+	90%{
+		 -webkit-transform:rotateX(10deg);
+	}
+	100%{
+		 -webkit-transform:rotateX(0deg);
+		  box-shadow:inset 0 0 0 20px rgba(0,0,0,0); 
+	}
+}
+@-webkit-keyframes  heid
+{
+	0%{
+		 -webkit-transform:rotateX(0deg)
+	}
+	100%{
+		 -webkit-transform:rotateX(-120deg)
+	}
+}
+body,h1{ margin:0; padding:0;}
+#wap { margin:0 auto; position:relative; text-align:center;left:300px}
+#wap h1{ position:absolute; left:0; top:0; width:150px; height:40px; background:#FC0; font:24px/40px; color:#C00; z-index:10;}
+#wap div{ position:absolute; left:0; top:32px; width:150px; height:30px; -webkit-transform-style:preserve-3d; -webkit-perspective:800px; -webkit-transform-origin:top; -webkit-transform:rotateX(-120deg); background:#0C0; font:18px/30px Verdana; color:#C00;  box-shadow:inset 0 0 0 20px rgba(0,0,0,0);}
+#wap span { display:block; width:100%; height:100%;}
+#wap>div { top:40px; }
+#wap .show {-webkit-animation:2s show ease-in; -webkit-transform:rotateX(0deg);  box-shadow:inset 0 0 0 20px rgba(0,0,0,0);}
+#wap .heid { -webkit-transform:rotateX(-120deg); -webkit-animation:0.5s heid;}
+</style>
+</head>	
+<body>
+<input type="button" value="按钮"/>
+<div id="wap">
+	<h1>主标题</h1>
+	<div>
+    	<span>选项1</span>
+        <div>
+    		<span>选项2</span>
+        	<div>
+                <span>选项3</span>
+                <div>
+                    <span>选项4</span>
+                    <div>
+                        <span>选项5</span>
+                        <div>
+                            <span>选项6</span>
+                            <div>
+                                <span>选项7</span>                     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+   		</div>
+    </div>
+</div>
+</body>
+<script>
+var btn=document.getElementsByTagName('input')[0];
+var adiv=document.getElementById('wap').getElementsByTagName('div');
+var off=true;
+var timer=null;
+var i=0;
+
+btn.onclick=function(){
+	if(timer){return }
+	if(off){
+		i=0;
+		timer=setInterval(function(){
+			adiv[i].className='show';
+			i++;
+			if(i>adiv.length-1){
+				clearInterval(timer);
+				off=false;
+				timer=null;
+				}
+			},200)
+	}else{
+		i=adiv.length-1;
+		timer=setInterval(function(){
+			adiv[i].className='heid';
+			i--;
+			if(i<0){
+				clearInterval(timer);
+				off=true;
+				timer=null;
+				}
+			},200)	
+	}
+	}
+</script>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<style class="sty">
+.box{ width:200px; height:200px; margin:100px auto; border:2px solid #000; border-radius:50%;position:relative; }
+.box ul,ul li{ margin:0; padding:0; }
+.box li{ width:2px; height:5px; background:#000; list-style:none; position:absolute; top:0; left:100px; -webkit-transform-origin:0 100px; }
+div { position:absolute;}
+.hou{ height:50px; width:6px; background:#000; top:50px; left:97px; -webkit-transform-origin:3px 50px; }
+.min{ height:65px; width:4px; background:#000; top:35px; left:98px; -webkit-transform-origin:2px 65px; }
+.sec{ height:85px; width:2px; background:#F00; top:15px; left:99px; -webkit-transform-origin:1px 85px; }
+.sic{ height:10px; width:10px; background:#000; top:95px; left:95px; border-radius:50%;}
+.box li:nth-of-type(5n){height:10px;}
+</style>
+
+<body>
+<div class="box">
+    <ul>
+    </ul>
+    <div class="hou"></div>
+    <div class="min"></div>
+    <div class="sec"></div>
+    <div class="sic"><div>
+</div>
+</body>
+<script>
+var obox=document.getElementsByClassName("box")[0];
+var osty=document.getElementsByClassName("sty")[0];
+var ohou=document.getElementsByClassName("hou")[0];
+var omin=document.getElementsByClassName("min")[0];
+var osec=document.getElementsByClassName("sec")[0];
+var oul=obox.getElementsByTagName("ul")[0];
+var arr='';
+var att='';
+for(var i=0;i<60;i++){
+	arr+='<li></li>';
+	att+='.box li:nth-of-type('+i+'){ -webkit-transform:rotate('+i*6+'deg)}'
+	}
+	oul.innerHTML+=arr;
+	osty.innerHTML+=att;
+	time();
+ 	setInterval(time,1000)
+	
+function time(){
+	var Time=new Date();
+	var sec=Time.getSeconds();
+	var minu=Time.getMinutes()+sec/60;
+	var hou=Time.getHours()+minu/60;
+	ohou.style.WebkitTransform='rotate('+hou*30+'deg)'
+	omin.style.WebkitTransform='rotate('+minu*6+'deg)'
+	osec.style.WebkitTransform='rotate('+sec*6+'deg)'
+	}
+</script>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#box{
+				margin:100px auto;
+				padding: 10px;
+				border: 1px solid red ;
+				width: 720px;
+				height: 350px;
+			}
+			#box1{
+				float:left;
+				width: 600px;
+				height: 200px;
+				background: #C6C6C6;
+			}
+			#box2{
+				clear:left;
+				border: 5px solid red;
+				width: 550px;
+				height: 70px;
+				padding: 20px;
+				background:#808080;
+				display: none;
+			}
+			#bbox{
+				width: 550px;
+				height:38px;
+				border-top: 2px solid firebrick;
+			}
+			input{
+				display:inline-block;
+				width:95px;
+				height:60px
+				border:none;
+				margin:0;
+				padding: 0;
+				font:18px/24px "微软雅黑";
+				background:#808080;
+			}
+			button{float: right;}
+			button img{width: 10px;}
+			#text1,#text2{margin-top:10px;width: 150px;}
+			#bt{display: none;}
+			span{background: yellow;}
+		</style>
+		<script src="js/miaov.js"></script>
+		<script>
+			window.onload=function(){
+				var ap=document.getElementsByTagName('p');
+				var ainp=document.getElementsByTagName('input');
+				var abtn=document.getElementsByTagName('button');
+				var str='';
+				var stt='';
+				var arr=[];
+				var off=true;
+				
+				
+				ainp[0].onclick=function(){
+					if(this.off){$('bt').style.display='none';this.off=false;}
+					else{$('bt').style.display='block';this.off=true;}
+				}
+				ainp[1].onmouseover=show;
+				ainp[2].onmouseover=show;
+				ainp[1].onmouseout=sho;
+				ainp[2].onmouseout=sho;
+				function show(){this.style.background='firebrick'}
+				function sho(){this.style.background='#808080'}
+				
+				ainp[1].onclick=function(){
+					$('bt').style.display='none';
+					ainp[0].off=false;
+					$('box2').style.display='block';
+					ainp[3].style.background='firebrick'
+					ainp[4].style.background='#808080'
+					$('text2').style.display='none';
+					$('btn').value='查找';
+				}
+				ainp[2].onclick=function(){
+					$('bt').style.display='none';
+					ainp[0].off=false;
+					$('box2').style.display='block';
+					ainp[3].style.background='#808080'
+					ainp[4].style.background='firebrick'
+					$('text2').style.display='inline-block';
+					$('btn').value='替换';
+				}
+				abtn[0].onclick=function(){$('box2').style.display='none';}
+				ainp[3].onclick=function(){
+					ainp[4].style.background='#808080'
+					ainp[3].style.background='firebrick'
+					$('btn').value='查找';
+					$('text2').style.display='none';
+				}
+				ainp[4].onclick=function(){
+					ainp[3].style.background='#808080'
+					ainp[4].style.background='firebrick'
+					$('text2').style.display='inline-block';
+					$('btn').value='替换';
+				}
+				$('btn').onclick=function(){
+				if($('btn').value=='查找'){
+					ap[0].innerHTML=ap[0].innerHTML.split(str).join(stt);
+					str=$('text1').value;
+					if(str===''){return alert('请输入要查找的内容！')}
+					stt=str;
+					arr=ap[0].innerHTML.split(str);
+					if(arr.length===1){return alert('对不起，您输入的'+stt+'未找到！')}
+					str='<span>'+str+'</span>'
+					ap[0].innerHTML=arr.join(str);
+					}else{
+					ap[0].innerHTML=ap[0].innerHTML.split(str).join(stt);
+					ap[0].innerHTML=ap[0].innerHTML.split($('text1').value).join($('text2').value);
+					
+					}
+				}
+					
+					
+					
+					
+				
+				
+				
+			}
+		</script>
+	</head>
+	<body>
+		<div id="box">
+			<div id="box1">
+				<p>差不多也基本符合增加25%伤害的描述了
+这个鹰击长空其实伤害真的很高，作为一个6秒的技能简直爆炸。但是有一个很关键的问题：
+到底是第一下打到之后只能再接一刀，还是可以连续再接两刀，这个也是一个很关键的一个点。就看官方后面
+怎么调整，（我个人意愿希望是能再接两刀，因为除了狂风刀之外，神刀其他技能伤害都不高，这个职业需要一
+个这样的技能来打输出）评价：凭借狂风刀的霸体经脉，和鹰击长空短CD的高伤害，神刀有了超一线的资本，
+后续版本鹰击长空如果修改为少一刀的释放，对神刀来讲都可以说是致命的，看策划爸爸怎么对待目前这种“能
+连续砍出两刀但是又偶尔只能砍出一刀”的情况，因为他判定哪一个成为BUG都是合理的。策划爸爸求放
+过，好好修复成第一刀命中之后连砍两刀吧。剩下的就是甜点时间了：无迹VS天地风火真武无迹：</p>
+			</div>
+			<input type="button" value="展开" />
+			<div id="bt">
+				<input type="button" value="查找"/>
+				<input type="button" value="替换"/>
+			</div>	
+			<div id="box2">
+				<input type="button" value="查找"/>
+				<input type="button" value="替换"/>
+				<button><img src="huangse.gif"></button>
+				<div id="bbox">
+					<input type="text" name="" id="text1" value="" />
+					<input type="text" name="" id="text2" value="" />
+					<input type="button" id="btn" value="查找" />
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

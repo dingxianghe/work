@@ -1,0 +1,421 @@
+1.<script type="text/tabel">
+注意type类型
+
+2.var Example = React.createClass({
+	render:
+})
+创建一个组件类
+
+3.ReactDOM.render(插入的内容，元素节点)
+在一个元素节点中插入内容
+
+4.JSX允许HTML 与 JavaScript 的混写
+语法规则：遇到 HTML 标签（以 < 开头），就用 HTML 规则解析；遇到代码块（以 { 开头），就用 JavaScript 规则解析。
+
+5.class 属性需要写成 className ，
+ for 属性需要写成 htmlFor 
+
+6.this.props 对象的属性与组件的属性一一对应，但是有一个例外，就是 this.props.children 属性。它表示组件的所有子节点
+注意：this.props.children 的值有三种可能：如果当前组件没有子节点，它就是 undefined ;如果有一个子节点，数据类型是 object ；如果有多个子节点，数据类型就是 array 。所以，处理 this.props.children 的时候要小心。
+
+属性的用法：（props）
+<HelloWorld name="tim"/{123}/{"tim"}/{[1,2,3]}/{变量}/{函数}/>
+var props={
+	none:"123",
+	two:"456"
+}
+<HelloWorld {...props}>//直接拿到props里面的属性和对应的值
+
+状态的用法：（state）
+
+getInitialState:初始化State属性
+setState:更新组件状态
+
+属性和状态的区别：
+1.属性可以由父组件进行修改和赋值。而状态不可以，状态只能由自己来操作。
+2.属性不能自己进行修改，但是可以设置默认值，状态随时可以修改。
+3.父组件可以修改子组件的属性和初始值，状态则不可以。
+
+组件在运行时需要修改的数据就是状态，除此之外，其他的数据都可以是属性
+
+
+
+7.React.Children：工具方法 我们可以用 React.Children.map 来遍历子节点，而不用担心 this.props.children 的数据类型是 undefined 还是 object。更多的 React.Children 的方法
+
+
+8.PropTypes:组件类的PropTypes属性，就是用来验证组件实例的属性是否符合要求
+例如： 
+propTypes: {
+    title: React.PropTypes.string.isRequired,
+  },
+
+上面的Mytitle组件有一个title属性。PropTypes 告诉 React，这个 title 属性是必须的，而且它的值必须是字符串。
+
+
+9.getDefaultProps 方法可以用来设置组件属性的默认值：值为一个对象，也可以用一个函数，返回一个对象。
+
+10。获取真实的DOM节点
+var MyComponent = React.createClass({
+  handleClick: function() {
+    this.refs.myTextInput.focus();
+  },
+  render: function() {
+    return (
+      <div>
+        <input type="text" ref="myTextInput" />
+        <input type="button" value="Focus the text input" onClick={this.handleClick} />
+      </div>
+    );
+  }
+});
+上面代码中，组件 MyComponent 的子节点有一个文本输入框，用于获取用户的输入。这时就必须获取真实的 DOM 节点，虚拟 DOM 是拿不到用户输入的。为了做到这一点，文本输入框必须有一个 ref 属性，然后 this.refs.[refName] 就会返回这个真实的 DOM 节点。
+需要注意的是，由于 this.refs.[refName] 属性获取的是真实 DOM ，所以必须等到虚拟 DOM 插入文档以后，才能使用这个属性，否则会报错。上面代码中，通过为组件指定 Click 事件的回调函数，确保了只有等到真实 DOM 发生 Click 事件之后，才会读取 this.refs.[refName] 属性。
+React 组件支持很多事件，除了 Click 事件以外，还有 KeyDown 、Copy、Scroll 等，
+
+
+11.this.state
+组件免不了要与用户互动，React 的一大创新，就是将组件看成是一个状态机，一开始有一个初始状态，然后用户互动，导致状态变化，从而触发重新渲染 UI （查看 demo08 ）。
+
+var LikeButton = React.createClass({
+
+//初始化一个State属性（返回对象）
+  getInitialState: function() {
+    return {liked: false};
+  },
+
+//定义一个点击事件
+  handleClick: function(event) {
+    this.setState({liked: !this.state.liked});
+  },
+
+//渲染组件
+  render: function() {
+    var text = this.state.liked ? 'like' : 'haven\'t liked';
+    return (
+      <p onClick={this.handleClick}>
+        You {text} this. Click to toggle.
+      </p>
+    );
+  }
+});
+
+//渲染到页面
+ReactDOM.render(
+  <LikeButton />,
+  document.getElementById('example')
+);
+上面代码是一个 LikeButton 组件，它的 getInitialState 方法用于定义初始状态，也就是一个对象，这个对象可以通过 this.state 属性读取。当用户点击组件，导致状态变化，this.setState 方法就修改状态值，每次修改以后，自动调用 this.render 方法，再次渲染组件。
+
+由于 this.props 和 this.state 都用于描述组件的特性，可能会产生混淆。一个简单的区分方法是，this.props 表示那些一旦定义，就不再改变的特性，而 this.state 是会随着用户互动而产生变化的特性。
+
+
+12表单
+用户在表单填入的内容，属于用户跟组件的互动，所以不能用 this.props 读取（查看 demo9 ）。
+
+var Input = React.createClass({
+  getInitialState: function() {
+    return {value: 'Hello!'};
+  },
+  handleChange: function(event) {
+    this.setState({value: event.target.value});
+  },
+  render: function () {
+    var value = this.state.value;
+    return (
+      <div>
+        <input type="text" value={value} onChange={this.handleChange} />
+        <p>{value}</p>
+      </div>
+    );
+  }
+});
+
+ReactDOM.render(<Input/>, document.body);
+上面代码中，文本输入框的值，不能用 this.props.value 读取，而要定义一个 onChange 事件的回调函数，通过 event.target.value 读取用户输入的值。textarea 元素、select元素、radio元素都属于这种情况，
+
+
+13.组件的生命周期
+组件的生命周期分成三个状态：
+Mounting：已插入真实 DOM
+
+//按顺序往下执行
+
+初始化阶段：
+getDefaultProps:获取实例的默认属性（只调用一次，实例之间共享引用）
+
+getInitialState:实例的初始化状态（不同的实例都有自己的状态）
+
+componentWillMount:组件被装载之前，render之前的最后一次修改状态的机会
+
+render:生成虚拟DOM，并且只能访问this.props和this.state，只有一个顶层组件，不允许修改状态和DOM输出
+
+componentDidMount:组件已经被渲染完成
+1,2,3,4,2,3，4,5,5
+
+运行中阶段：
+componentWillReceiveProps:父组件修改属性触发，可以修改新属性、修改状态（在修改前触发）
+shouldComponentUpdate:返回false 会阻止render的调用
+componentWillUpdate:不能修改状态和属性
+render:生成虚拟DOM，并且只能访问this.props和this.state，只有一个顶层组件，不允许修改状态和DOM输出
+componentDidUpdate:可以修改DOM
+
+销毁阶段：
+componentWillUnmount()
+
+
+属性被修改后会自动调用render函数
+
+Updating：正在被重新渲染
+Unmounting：已移出真实 DOM
+React 为每个状态都提供了两种处理函数，will 函数在进入状态之前调用，did 函数在进入状态之后调用，三种状态共计五种处理函数。
+componentWillMount()
+componentDidMount()
+componentWillUpdate(object nextProps, object nextState)
+componentDidUpdate(object prevProps, object prevState)
+componentWillUnmount()
+此外，React 还提供两种特殊状态的处理函数。
+componentWillReceiveProps(object nextProps)：已加载组件收到新的参数时调用
+shouldComponentUpdate(object nextProps, object nextState)：组件判断是否重新渲染时调用
+这些方法的详细说明，可以参考官方文档。下面是一个例子（查看 demo10 ）。
+
+var Hello = React.createClass({
+  getInitialState: function () {
+    return {
+      opacity: 1.0
+    };
+  },
+
+  componentDidMount: function () {
+    this.timer = setInterval(function () {
+      var opacity = this.state.opacity;
+      opacity -= .05;
+      if (opacity < 0.1) {
+        opacity = 1.0;
+      }
+      this.setState({
+        opacity: opacity
+      });
+    }.bind(this), 100);
+  },
+
+  render: function () {
+    return (
+      <div style={{opacity: this.state.opacity}}>
+        Hello {this.props.name}
+      </div>
+    );
+  }
+});
+
+ReactDOM.render(
+  <Hello name="world"/>,
+  document.body
+);
+上面代码在hello组件加载以后，通过 componentDidMount 方法设置一个定时器，每隔100毫秒，就重新设置组件的透明度，从而引发重新渲染。
+另外，组件的style属性的设置方式也值得注意，不能写成
+
+style="opacity:{this.state.opacity};"
+而要写成
+
+style={{opacity: this.state.opacity}}
+这是因为 React 组件样式是一个对象，所以第一重大括号表示这是 JavaScript 语法，第二重大括号表示样式对象。
+
+
+14.Ajax
+组件的数据来源，通常是通过 Ajax 请求从服务器获取，可以使用 componentDidMount 方法设置 Ajax 请求，等到请求成功，再用 this.setState 方法重新渲染 UI （查看 demo11 ）。
+
+var UserGist = React.createClass({
+  getInitialState: function() {
+    return {
+      username: '',
+      lastGistUrl: ''
+    };
+  },
+
+  componentDidMount: function() {
+    $.get(this.props.source, function(result) {
+      var lastGist = result[0];
+      if (this.isMounted()) {
+        this.setState({
+          username: lastGist.owner.login,
+          lastGistUrl: lastGist.html_url
+        });
+      }
+    }.bind(this));
+  },
+
+  render: function() {
+    return (
+      <div>
+        {this.state.username}'s last gist is
+        <a href={this.state.lastGistUrl}>here</a>.
+      </div>
+    );
+  }
+});
+
+ReactDOM.render(
+  <UserGist source="https://api.github.com/users/octocat/gists" />,
+  document.body
+);
+上面代码使用 jQuery 完成 Ajax 请求，这是为了便于说明。React 本身没有任何依赖，完全可以不用jQuery，而使用其他库。
+我们甚至可以把一个Promise对象传入组件，请看Demo12。
+
+ReactDOM.render(
+  <RepoList
+    promise={$.getJSON('https://api.github.com/search/repositories?q=javascript&sort=stars')}
+  />,
+  document.body
+);
+上面代码从Github的API抓取数据，然后将Promise对象作为属性，传给RepoList组件。
+如果Promise对象正在抓取数据（pending状态），组件显示"正在加载"；如果Promise对象报错（rejected状态），组件显示报错信息；如果Promise对象抓取数据成功（fulfilled状态），组件显示获取的数据。
+
+var RepoList = React.createClass({
+  getInitialState: function() {
+    return { loading: true, error: null, data: null};
+  },
+
+  componentDidMount() {
+    this.props.promise.then(
+      value => this.setState({loading: false, data: value}),
+      error => this.setState({loading: false, error: error}));
+  },
+
+  render: function() {
+    if (this.state.loading) {
+      return <span>Loading...</span>;
+    }
+    else if (this.state.error !== null) {
+      return <span>Error: {this.state.error.message}</span>;
+    }
+    else {
+      var repos = this.state.data.items;
+      var repoList = repos.map(function (repo) {
+        return (
+          <li>
+            <a href={repo.html_url}>{repo.name}</a> ({repo.stargazers_count} stars) <br/> {repo.description}
+          </li>
+        );
+      });
+      return (
+        <main>
+          <h1>Most Popular JavaScript Projects in Github</h1>
+          <ol>{repoList}</ol>
+        </main>
+      );
+    }
+  }
+
+
+onChange={this.handleChange}
+事件：handleChange:function(event){
+	this.setState({name:event.target.value});
+}
+
+
+触摸事件：
+onTouchCancel:
+onTouchEnd:
+onTouchMove:
+onTouchStart:
+
+键盘事件：
+onKeyDown:按键按下
+onKeyPress：按击
+onKeyUp:按键弹起
+
+剪切：
+onCopy:复制
+onCut:剪切
+onPaste:粘贴
+
+表单：
+onChange:表单内容改变
+onInput:表单输入文本
+onSubmit:表单提交
+
+焦点：
+onFocus:得到焦点
+onBlur：失去焦点
+
+UI元素：
+onScroll：滚动事件
+
+滚轮：
+onWheel：滚轮事件
+
+鼠标事件：
+onClick:点击
+onContextMenu:右击
+onDoubleClick:双击
+onMouseDown:按下
+onMouseEnter:进入一个元素
+onMouseLeave:离开一个元素
+onMouseMove:移动
+onMouseOut:离开
+onMouseOver:离开
+onMouseUp:弹起
+拖拽
+onDrop
+onDrag
+onDragEnd
+onDragEnter
+onDragExit
+onDragLeave
+onDragOver
+onDragStart
+
+事件对象event
+event.target就是表示这个元素，然后就可以当成普通的DOM元素来进行读写。
+
+组件嵌套的优点和缺点
+优点：
+逻辑清晰：父子关系对应，易于理解。
+代码模块化：每个模块对应一个功能，不同的模块可以同步开发。
+封装细节：开发者只需要关系组件的功能，不用关心组件实现的细节。
+
+缺点：
+编写难度高：父子关系的具体实现都需要经过深思熟虑，贸然编写将导致关系混乱、代码难以维护。
+无法掌握所有的细节：使用者只知道组件的用法，不知道实现的细节，遇到问题难以修复。
+
+
+Minxin的优点和缺点：
+优点：
+代码复用：抽离出通用的代码，减少开发成本，提高开发效率。
+即插即用：可以直接使用许多现有的Minxin来编写自己的组件。
+适用性强：改动一次代码，影响多个组件。
+
+缺点：
+编写难度高：Minxin可能被用在各种环境中，兼容多种环境就需要更多的逻辑和代码，通用的代价就是提高复杂度。
+降低代码的可读性：组件的优势就是在在于将逻辑和界面直接结合在一起，Minxin本质上会去分散逻辑，理解起来难度更大。
+
+
+React双向绑定数据：
+
+text:""
+
+mixins:[React.addons.LinkedStateMixin],
+
+<input type="text" valueLink={this.linkState('text')}/>
+ 
+<p>{this.state.text}</p>
+
+
+表单元素
+在下拉列表cheched中 获取值的的事件对象为event.target.cheched
+
+事件处理函数复用
+1.bind(this,name)
+通过传入this来判断事件的对象
+
+2.event.target.name
+在元素中设置name属性，然后通过event.target.name事件来判断事件对象
+
+
+在一个叫Abc的组件中
+
+this.props.children指div
+this.props.children.props.children指123
+
+<Abc><div>123</div></Abc>
+

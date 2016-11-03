@@ -1,0 +1,247 @@
+$.each(box,function(attr,value) {
+	alert(attr + ':' + value)
+})
+//循环 弹出对象数组的每一个名和值
+//box:对象数组；attr:下标；value:值
+
+
+$('div').each(function(index,element){
+	alert(index + ':' + element)
+})
+//循环 弹出所有的div元素
+//index:元素的索引值；elememnt:元素
+
+$().css()
+//括号内可以传递JSON格式设置多个值
+//也可以第二个参数传递函数动态设置属性值
+//函数可以传递两个参数索引index和原来的//值value
+
+addClass()    添加class
+removeClass() 删除class
+toggleClass() 切换class
+//toggleClass('red',count++%3==0)可以传递第二个参数，如果为真则设置成该属性，假则返回默认属性，可以设置切换频率 
+如果要在两个样式中切换，可以自己写逻辑
+
+元素1.insertBefore(元素2) 1在2之前
+元素1.insertAfter(元素2)	  1在2之后
+元素1.before(元素2)	  2在1之前	
+元素1.after(元素2)	  2在1之后
+元素1.appendTo(元素2)	  1在2里面靠后
+元素1.prependTo(元素2)	  1在2里面靠前
+元素1.append(元素2)       2在1里面靠后
+元素1.prepend(元素2)   	  2在1里面靠前
+可以通过函数来返回动态元素 
+
+表单选择器
+$('input[type=password]').eq(1).val()
+选择type=password的input的第2个的value值
+可以用name=city 之类的来精确选择
+
+过滤器 先要确定范围 在哪些元素里面进行过滤
+在from里面进行过滤选择可用元素
+$（'from:enabled'）
+
+:enabled	选择所有可用元素
+:disbaled	选择所有不可用元素
+:checked	选取被选中的与元素单选复选字段	
+:selected	选取被选中的元素 下拉列表
+
+事件
+dblclick（）:双击
+change（）:表单的值的改变
+select（）:下拉菜单的值的改变
+submit（）:表单提交
+keydown（）,keyup（）:键盘按下、抬起
+blur（）:光标激活
+focus（）：光标丢失
+load（）：加载
+resize（）:窗口大小的改变
+scroll（）：窗口的滚动
+error（）:报错时
+
+$('div').bind({'click':function()		alert(1);
+	{
+	},'mouseover':function(){
+		alert(2);
+	}
+	})
+通过JOSN的格式绑定多个不同的事件
+unbind()	删除绑定的事件
+mouseover（）	鼠标移入
+mouseout（）	鼠标移出
+
+mouseenter()	鼠标穿入
+mouseleave()	鼠标穿出
+在遇到子节点的时候不会再次触发的
+鼠标传入穿出事件结合为hover（fn1，fn2）事件
+
+$('input').keydown(function(e) {
+	alert(e.keyCode);
+})	返回键码按下a返回65
+
+$('input').keypress(function(e) {
+	alert(e.charCode);
+})	返回字符编码按下a返回97
+
+
+focusin（）:光标激活
+focusout（）：光标丢失
+可以在子元素有光标激活或者丢失事件的时候触发
+
+事件对象
+e.type		获取绑定的事件类型 如click
+e.target	获取绑定事件的元素
+e.data		获取传入的额外的数据
+e.target	获取你触发事件的那个元素
+e.currentTarget	获取你绑定事件的那个元素
+e.relatedTarget	获取移入前和移出后的元素
+e.pageX/pageY	相对于页面原点的坐标
+e.screenX/screenY 相对于屏幕的坐标
+e.clientX/clientY 相对于浏览器窗口的坐标
+e.result	获取上一个相同事件的返回值
+e.timeStamp	获取事件触发的时间戳
+e.which		获取鼠标的左中右123，或按键值
+e.altKey/shiftKey/ctrlKey
+获取是否同时摁下了alt,shift,ctrl这三个键 true
+
+e.stopPropagation()     阻止事件冒泡
+e.isPropagationStopped()是否调用上面的方法
+ 
+e.preventDefault()    阻止默认事件 
+e.isDefaultPrevented()是否调用上面的方法
+默认事件：表单提交，系统菜单，链接跳转
+结合一起就是 return false；
+
+e.stopImmediatePropagation()
+取消冒泡事件，并且取消该事件的后续处理函数
+e.isImmediatePropagationStopped()
+是否调用了上面的方法
+
+高级事件
+
+$(‘div’).click(function(e,a,b) {
+	alert(a+b)
+}).trigger(‘click',['123','abc'])
+
+trigger（）模拟点击事件操作里面可以传递
+   额外的参数，多个参数需要用【】来包裹
+	可以用来模拟自定义事件
+ 
+triggerHandler() 用法同上与trigger相比
+1.会阻止默认行为
+2.这个只执行匹配到的第一个元素 trigger执行所有
+3.返回执行的函数的返回值 无法进行链式操作
+4.不会冒泡
+
+$(‘div’).delegate('button','click',function(){
+	$(this).clone().appendTo('div:first')
+})
+注意：delegate()需要指定父元素，一参为当前元素，二参
+为事件方法，三参为执行函数，也可以传递额外参数。
+ 	undelegate也可以删除事件 
+delegate()主要用于事件委托和对动态生成的元素绑定事件
+
+列队动画，递归自调用  自动
+$('.show').click(function(){
+	$('.test').first().show(200,function next(){
+		$(this).next().show(200,next);
+	})
+})
+
+$('.show').click(function(){
+	$('.test').toggle(200);
+}） 	显示和隐藏之间切换
+
+自定义动画：
+$('.test').animate({},200,fn1)
+第一个参数为需要变化的属性及值为json格式
+第二个参数为时间  第三个为回调函数
+运动的位置都是从初始值开始算~如要累加可用left:'+=100px'
+可以通过连缀来实现列队动画（或者顺序排列）必须同一元素
+只有动画元素可以连缀列队实现 如果出现css()则会直接执行
+queue（）  类似于回调函数
+如果要列队可以用queue(function(){$(this).css()})来实现
+然后可以在queue（）中最后单独加一个next（）；来继续连缀
+
+clearQueue() 清理后面的动画
+：animated 查找正在运动的元素
+$.fx.off=ture		关闭全局动画
+$.fx.interval=200	设置动画帧数
+
+
+
+AJAX
+局部方法load（）
+$('#box').load('text.php'，{}，fn) 用#box来接收内容
+为get方式则在后面？a=b&c=d  为POST则加一个参数{a:b，c:d}}
+回调函数function（response,status,xhr）{}
+传递三个参数第一个为返回的内容，第二个为状态，返回success
+则为成功，返回error则为失败，第三个为一个对象（不常用）
+
+全局方法$.get()
+第一个参数为URL
+第二个参数为请求成功的回调函数function（data,status）{}
+
+全局方法$.post()
+第一个参数为URL
+第二个参数为传递的数据{}格式
+第三个参数为请求成功的回调函数function（data,status）{}
+
+
+$.getScript() 用于加载JS文件 只需要一个参数url
+$.getJSON()   不需要第四个参数 用于加载返回JSON格式的数据
+
+$.ajax()	只要传递一个对象{}
+类型	tyep：‘post’，
+地址	url：‘test.php’，
+数据	data：{a:b,c:d}或$('from').serialize()  
+接受数据类型dataType:'json';(获取远程数据用jsonp)
+成功后	success：function(response,status,xhr){}
+
+多个回调函数列队执行时，可以用连缀的方式在后面继续加回调函数
+$.ajax(...).done(function(){})
+
+
+
+serialize	字符串格式的数据
+serializeArray 获取JSON格式的数据
+$.ajax()其他的一些属性如 global:false (不触发全局事件)
+			timeout:500(最长等待时间)
+	error:function(xhr,errorText,errorType){}
+//errorText；错误文本	errorType:错误类型
+//$.post().error(function(){}) 通过连缀的方式，用法同上
+
+$.ajaxSetup({})
+	上面多个参数一样时 设置一个默认值 后续就不用重复设置
+data传输的数据对象很复杂 需要解析后传输的话在前面加$.param包裹
+
+用户等待相应的时候提示的信息：
+$(document).ajaxStart(function(){
+	$('.loading').show()
+}).ajaxStop(function(){
+	$('.ioading').hide()
+})
+
+$.ajax()跨域下的解决方式
+设置dataType:'jsonp'
+设置PHP文件里面的
+<?php
+	$_arr=array('a'=>1,'b'=>2,'c'=3);
+	$_result=json_encode($_arr);
+	$_callback=$_GET['callback'];
+	echo $_callback."($_result)";
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

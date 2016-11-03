@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		#box{
+			width: 300px;
+			height: 150px;
+			position: relative;
+			overflow: hidden;
+		}
+		#box1{
+			width:900px;
+			height: 100px;
+			position: absolute;
+			z-index: 2;
+			overflow: hidden;
+			left: 0px;
+			background: white;
+		}
+		#box2{
+			width: 600px;
+			height: 100px;
+			z-index: 1;
+			position: absolute;
+			overflow: hidden;
+			left:0px;
+			background: white;	
+		}
+		input{
+			width: 40px;
+			height: 18px;
+			border: 1px solid black;
+		}
+		img{
+			width: 100px;
+			height: 100px;
+			position:absolute;
+			top:0px;
+			
+		}
+		#bbox{
+			position: absolute;
+			left:120px;
+			top: 120px;	
+		}
+	</style>
+	<script src="js/miaov.js"></script>
+	<script>
+		window.onload=function(){
+			var abtn1=document.getElementById('btn1');
+			var abtn2=document.getElementById('btn2');
+			var abtn3=document.getElementById('btn3');
+			var abtn4=document.getElementById('btn4');
+			var abox1=document.getElementById('box1');
+			var aimg1=abox1.getElementsByTagName('img')
+			var abox2=document.getElementById('box2');
+			var aimg2=abox2.getElementsByTagName('img')
+			var arrimg1=['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg','img/5.jpg','img/6.jpg','img/7.jpg','img/8.jpg','img/9.jpg']
+			var arrimg2=['img/11.jpg','img/12.jpg','img/13.jpg','img/14.jpg','img/15.jpg','img/16.jpg']
+			var off=true;
+			var op=true;
+			for(var i=0;i<arrimg1.length;i++){
+				aimg1[i].src=arrimg1[i]
+				aimg1[i].style.left=i*100+'px';
+			}
+			for(var i=0;i<arrimg2.length;i++){
+				aimg2[i].src=arrimg2[i]
+				aimg2[i].style.left=i*100+'px';
+			}
+			
+			abtn1.onmouseover=function(){
+				cba(abox1,abox2);op=true;
+				}
+			abtn2.onmouseover=function(){
+				cba(abox2,abox1);op=false;
+				}
+			abtn4.onclick=function(){abc((op?abox1:abox2),-300,(op?600:300));}
+			
+			abtn3.onclick=function(){abc((op?abox1:abox2),300,(op?600:300));}
+			
+			function abc(abox1,ab,qqq){
+				if(off){
+				var app=parseInt(getStyle(abox1,'left'))+ab;
+				if(app>=-qqq&&app<=0){off=false;doMove(abox1,'left',20,app,function(){off=true;})}
+				}
+			}
+			function cba(abox1,abox2){
+				abox1.style.zIndex=2;abox2.style.zIndex=1;
+				abox1.style.left=0+'px';
+				}
+			
+		}
+	</script>
+	<body>
+		<div id="box">
+			<input	id="btn1" type="button" value="新品" />
+			<input	id="btn2" type="button" value="极客" />
+			<div id="box1">
+				<img/>
+				<img/>
+				<img/>
+				<img/>
+				<img/>
+				<img/>
+				<img/>
+				<img/>
+				<img/>
+
+			</div>
+			<div id="box2">
+				<img/>
+				<img/>
+				<img/>
+				<img/>
+				<img/>
+				<img/>
+			</div>
+			<div id="bbox">
+				<input	id="btn3" index='1' type="button" value="<" />
+				<input	id="btn4" index='2' type="button" value=">" />
+			</div>
+			
+		</div>
+	</body>
+</html>

@@ -1,0 +1,52 @@
+let 定义一个变量，作用域为块级
+const 定义一个常量，作用域为块级
+
+var m=new Map([['dasda',41],['adsdas',44],['zxczxc',14],['xcvx',14]]);
+      结构为key-value的键值对
+m.set(‘asd’，64)；//添加一组键值对
+m.get（‘asd’）；//获取这个key值对应的value值
+
+
+var s=new Set([1,4,6,2,8])
+	也可以直接传入一个数组，可以自动过滤掉重复的值
+s.add(5);//添加一个值
+s.delete(6)//删除一个值
+
+
+循环
+for 。。。of。。。
+for(var x of a){
+	alert(x)
+}
+for(var x of s){
+	alert(x)
+}
+for(var x of m){
+	alert(x[0]+'='+x[1])
+}
+
+内置forEach（）方法
+a.forEach(function(element,index,array){
+    // element: 指向当前元素的值
+    // index: 指向当前索引
+    // array: 指向Array对象本身
+    alert(element);	
+})
+
+Map的参数依次为value,key,map
+Set的参数依次为element,element,set
+
+注意，forEach()方法是ES5.1标准引入的，你需要测试浏览器是否支持。
+
+
+arr.map(function(x){})//传入一个函数，这个函数传入一个参数x，然后数组里面的每一个值都执行这个函数，返回执行完的结果的数组。
+
+arr.reduce(function(x,y){})//传入一个函数，这个函数传入参数x,y。然后数组里面的值从第一个起迭代执行这个函数，返回的值则保存在x中，继续执行，返回最后的执行结果。
+
+arr.filter(function（x）{})//传入一个函数，这个函数传入一个参数x，然后数组里面的每一个值都执行这个函数，返回true的则保存到数组，返回false的则过滤掉。
+
+arr.sort(fcuntion(x,y){})//默认情况下按照字符串的大小比较，传入函数时，传入x,y参数，返回结果时，如果返回正数则正序，返回负数则倒序。
+
+箭头函数
+箭头函数的this始终绑定在词法作用域上，所以用call()或者apply()调用时，传入的第一个参数会被忽略
+函数名=（参数）=>(函数体)

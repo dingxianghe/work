@@ -1,0 +1,35 @@
+define(function(require,exports,module){
+	//参数不变
+exports:对外的接口
+require:依赖的接口
+
+	require(url);url为需要依赖的JS文件，如果导入进来的JS文件为一个模块，则这个require（）函数的返回值为exports
+
+	exports.tab=tab;//将函数都绑定为exports对象的方法。
+	function tab() {};
+
+	require.async(url,function(ex){//异步按需加载
+
+		ex.tab();
+	})
+	
+	module.exports={
+		tab=tab,
+		abc=abc	
+	}
+})
+
+<script>
+seajs.use:接受两个参数，第一个参数为模块的地址，第二个为回调函数
+
+url为seajs的相对路径
+seajs.use(url。function（ex）{}//回调的参数就是模块的exports
+
+加载多个文件的时候
+seajs.use([url1,url2].function（ex,ex2）{}
+
+通过exports这个接口来调用模块里面的方法
+exports.tab();
+
+})
+</script>

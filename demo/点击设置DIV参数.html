@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+<style>
+	p{
+		font: 23px "微软雅黑";
+		color: black;
+		display: inline;
+		margin-left:17px;
+
+	}
+	#uav{
+		border: none;
+		font: 12px "微软雅黑" ;
+		color: #fff;
+		width:100px;
+		height: 40px;
+		background: red;
+
+	}
+	#box{
+		width: 100px;
+		height: 100px;
+		border: 4px solid #393129;
+		margin-left:17px;
+		margin-top: 30px;
+
+	}
+	#button{
+		background:#fff;
+		width: 300px;
+		height: 200px;
+		border: 20px solid #9c949c;
+        padding: 0px;
+        position: absolute;
+        top: 170px;
+        left: 390px;
+        display: none;
+	}
+    #button li{
+    	        list-style-type:none
+    }
+	#button p{
+		font: 15px/40px  "微软雅黑";
+		padding: 0px;
+        
+	}
+	.top1{
+			display: inline;
+	}
+	.top2{
+			display: inline;
+	}
+	.top1 button{
+		 width: 36px;
+		 height: 32px;
+		 color: #fff;
+		font: 11px "微软雅黑";
+		border: none;	
+	}
+	.top2 button{
+	     width: 34px;
+		 height: 30px;
+		 color: #848c8c;
+		 font:9px "微软雅黑";
+	     border: 1px solid #808080;
+     }
+     .top3 button{
+     	width: 60px;
+     	height: 30px;
+     	background: #002952;
+     	font:14px "微软雅黑";
+     	color: #fff;
+     	border: none;
+     	margin-top: 20px;
+     }
+</style>
+	</head>
+	<body id="qq">
+		<p>请为下面的DIV设置样式：</p>
+		<button id="uav">点击设置</button>
+		<div id="box">	
+		</div>
+		<ul id="button" >
+			<li style="margin-top: 10px;margin-left: 16px;">
+			<p>请选择背景色：</p>
+			<div class="top1">
+			<button id="c1"  style="background:#9cce00">红</button >
+			<button id="c2" style="background:#efbd00">黄</button>
+			<button id="c3" style="background: #5a94ef;">蓝</button>
+			</div>
+			</li>
+			<li style="margin-left: 18px ;">
+			<p>请选择宽(px):</p>
+			<div class="top2" style="width: 150px;">
+			<button id="c4" style="margin-left: 13px">200</button>
+			<button id="c5">300</button>
+			<button id="c6">400</button>
+			</div>
+			</li>
+			<li style="margin-left: 18px;">
+			<p>请选择高(px):</p>
+			<div class="top2" style="width: 150px;">
+			<button id="c7" style="margin-left: 13px">200</button>
+			<button id="c8">300</button>
+			<button id="c9">400</button>
+			</div>
+			</li>
+			<li class="top3">
+				<button id="v1" style="margin-left:80px ">恢复</button>	
+				<button id="v2">确定</button>
+		   	 </li>
+		</ul>
+		<script>
+			var  d1=document.getElementById('uav')
+			var  d2=document.getElementById('button')
+			var  c1=document.getElementById('c1')
+			var  c2=document.getElementById('c2')
+			var  c3=document.getElementById('c3')
+			var  c4=document.getElementById('c4')
+			var  c5=document.getElementById('c5')
+			var  c6=document.getElementById('c6')
+			var  c7=document.getElementById('c7')
+			var  c8=document.getElementById('c8')
+			var  c9=document.getElementById('c9')
+			var  v1=document.getElementById('v1')
+			var  v2=document.getElementById('v2')
+			var  v3=document.getElementById('box')
+			var  v4=document.getElementById('qq')
+			
+			d1.onclick=function (){
+				d2.style.display='block';
+				v4.style.background='#808080';
+				v4.style.opacity='0.5';
+				d2.style.background='#fff';
+				d2.style.opacity='1';
+			}
+			c1.onclick=function(){
+				v3.style.background='red';
+			}
+			c1.onmouseover=function(){
+				c1.style.background='red';
+				c1.style.border='1px solid black';
+			}
+			c1.onmouseout=function(){
+				c1.style.background='#9cce00';
+				c1.style.border='none';
+			}
+			c2.onclick=function(){
+				v3.style.background='yellow';
+			}
+			c2.onmouseover=function(){
+				c2.style.background='yellow';
+				c2.style.color='black';
+				c2.style.border='1px solid black';
+			}
+			c2.onmouseout=function(){
+				c2.style.background='#efbd00';
+				c2.style.color='#fff';
+				c2.style.border='none';
+		    }
+			c3.onclick=function(){
+				v3.style.background='blue';
+			}
+			c3.onmouseover=function(){
+				c3.style.background='blue';
+				c3.style.border='1px solid black';
+			}
+			c3.onmouseout=function(){
+				c3.style.background='#5a94ef';
+				c3.style.border='none';
+		    }
+			c4.onclick=function(){
+				v3.style.width='200px';
+			}
+			c4.onmouseover=sb;
+			c4.onmouseout=su;
+			c5.onclick=function(){
+				v3.style.width='300px';
+			}
+			c5.onmouseover=sb;
+			c5.onmouseout=su;
+			c6.onclick=function(){
+				v3.style.width='400px';
+			}
+			c6.onmouseover=sb;
+			c6.onmouseout=su;
+			c7.onclick=function(){
+				v3.style.height='200px';
+			}
+			c7.onmouseover=sb;
+			c7.onmouseout=su;
+			c8.onclick=function(){
+				v3.style.height='300px';
+			}
+			c8.onmouseover=sb;
+			c8.onmouseout=su;
+			c9.onclick=function(){
+				v3.style.height='400px';
+			}
+			c9.onmouseover=sb;
+			c9.onmouseout=su;
+			v1.onclick=function(){
+				v3.style.width='100px';
+				v3.style.height='100px';
+				v3.style.background='none';
+			}
+			v2.onclick=function(){
+				d2.style.display='none';
+ 				v4.style.background='#fff';
+				v4.style.opacity='1';
+			}
+			function su(){
+				this.style.border='1px solid #808080';
+				this.style.background='#efefef';
+				this.style.color='#848c8c';
+			}
+			function sb(){
+				this.style.border='1px solid black';
+				this.style.background='#ef9400';
+				this.style.color='#000';
+			}
+		</script>
+	</body>
+</html>

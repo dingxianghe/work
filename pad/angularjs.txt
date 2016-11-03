@@ -1,0 +1,586 @@
+
+JS表达式
+1.属性求值：所有属性的求值都是对于scope的，JS是对于window对象的
+2.宽容：表达式求值，对于undefined和null，angular是宽容的，但JS会报错
+3.没有流程控制语句，如条件，循环，抛出异常
+4.过滤器：我们可以将表达式的结果传入过滤器链
+
+
+数据是双向绑定的：通过改变一个view的值，会马上改变model的值,同时model又会改变所有和model匹配的view的值
+相当于$.scope.name=value;
+<input type="text" value='' ng-model='name'>
+ng-model='name' 
+
+{{mame}}
+
+
+控制器Controller
+
+手动触发脏检查
+
+通过$scope.$apply(function(){
+
+	$scope.date=new Date();
+	//执行完函数后主动去触发改变的值得脏检查
+
+ })
+
+ng-开头的属性运行完之后都会主动进行脏检查
+
+$apply=>$vale()=>$digest()=>$watch()
+
+监听一个model
+ $scope.$watch()
+传递三个参数，1 为需要监听的model
+2.model发生改变的时候触发的函数，函数有两个参数
+newValue 和 oldValue 新的参数和久的参数
+3.当这个model为一个对象的时候，假如设置第三个参数为true，则这个对象里面的任何一个属性变化都会触发事件
+
+ng-repeat="item in cart"
+循环添加标签cart里面有多少个元素就添加多少个标签用item代表每一个元素
+
+angular内置的循环的方法：
+一参需要循环的对象，二参循环执行的方法 二参有一个参数为需要循环的对象里面的元素。
+angular.forEach($scope.cart,function(item){
+	$scope.cart里面有多少个item就循环多少次
+})
+
+添加一个点击事件触发remove这个方法
+ng-click="remove（）"
+
+当一个表达式为真 这个标签里面的东西显示 为假是自动隐藏
+
+$scope.remove=fucntion(){}
+
+//新建模块名，需要依赖的模块名，配置文件
+var myApp=angular.module('myApp',[]，function($filterProvider, $provide, $controllerProvider){
+
+创建一个服务
+$provide.service();
+
+创建一个过滤器（返回一个函数，函数返回过滤后的值）
+$filterProvider.register('filterAge', function () {
+        return function (obj) {
+            var newObj = [];
+
+            angular.forEach(obj, function (o) {
+                if (o.age > 20) {
+                    newObj.push(o);
+                }
+            });
+
+            return newObj;
+
+        }
+	
+	创建一个控制器
+$controllerProvider.register('firstController', function ($scope, Data) {
+        $scope.data = Data;
+    })
+
+})
+// 第二种创建过滤器的方法，连缀一个fliter()
+.filter('filterCity',function(){
+    return function(obj){
+        var newObj = [];
+
+        angular.forEach(obj, function (o) {
+            if (o.city === '上海') {
+                newObj.push(o);
+            }
+        });
+
+        return newObj;
+    }
+})
+// 隐示的依赖注入
+    .controller('firstController', function ($scope, CustomService) {
+        console.log(CustomService);
+    })
+
+// 显示的依赖注入
+    .controller('secondController', ['$scope', '$filter', function (a, b) {
+        console.log(b('json')([1, 2, 3, 4, 5]));
+    }]);
+})
+
+共享控制器内的数据，可以通过依赖注入同一个服务，在服务内返回共享的数据来实现，控制器内的数据共享。
+
+
+依赖注入组件(服务)
+
+value
+
+/快捷方法
+myApp.factory（服务的名字，function(){
+返回一个数据
+}）：可以返回任何类型的数据
+
+myApp.service（服务的名字，function(){
+返回一个对象
+}）：必须返回对象类型的数据(引用类型的)、
+
+provider
+
+constant
+
+	<!--123,456,789-->
+        <p>{{123456789 | number}}</p>
+        <!--12,345.679-->
+        <p>{{12345.6789 | number:3}}</p>
+
+        <!--$999,999.00-->
+        <p>{{999999 | currency}}</p>
+        <!--rmb999,999.00-->
+        <p>{{999999 | currency:'rmb'}}</p>
+
+
+        <p>{{[1,2,3,4,5,6,7] | limitTo:5}}</p>
+
+
+        <p>{{[1,2,3,4,5,6,7] | limitTo:-5}}</p>、
+
+	//筛选
+            {{ data.city | filter : '上海'}}
+       
+            {{ data.city | filter : 'name'}}
+     
+     
+            {{ data.city | filter : {py:'g'} }}
+     
+            {{ data.city | filter : checkName }}
+       
+	//按照py这个key值作为排序；
+            {{ data.city | orderBy : 'py'}}
+
+            {{ data.city | orderBy : '-py'}}
+        </p>
+
+ng-class="{abc:ture}" 后面为true则添加abc的class
+
+ <tr ng-repeat="product in productData | filter:search ">
+循环表达式后面加筛选器则按照筛选器的顺序来排序
+
+
+ng-bind="1+1"//元素内显示表达式结果
+ng-bind-template="{{1+1}}"//元素内显示表达式结果
+ng-init="ca=[1,2]"//初始化（定义）一个变量
+ng-class-even="2"//循环一组元素的时候，偶数行显示该class
+ng-class-add="2"//循环一组元素的时候，奇数行显示该class
+$index//循环一组元素时，表示当前元素的索引值
+$first//循环一组元素时，表示当前元素的为第一个
+$middle//循环一组元素时，表示当前元素的非头非尾
+$last//循环一组元素时，表示当前元素的为最后一个
+ng-include="index.html"//引入一个其他的页面到元素中
+$event表示当前元素
+angular.element(event.target).html()//改变该元素的内容（JQ）
+angular.element（）//创建一个元素
+ng-style="{}"//设置元素的属性
+ng-src="''"//这是元素的路径（字符串的形式）
+
+
+自定义指令directive
+
+
+var myApp = angular.module('myApp', [], ['$compileProvider',function ($compileProvider) {
+注意自定义指令在起名的时候需要采用驼峰试写法
+如：‘a-bc’=>‘aBc’
+    $compileProvider.directive('customTags',function(){
+        return {
+
+/restrict指令的类型/E元素类/C文本类/A属性类/M注释类/
+         	restrict:'ECAM',
+
+/template/显示在该元素里面的内容/
+          	template:'<div>custom-tags-html</div>',
+
+/templateUrl/链接一个html页面来渲染这个标签里面的属性（用标签包裹）
+也可以用渲染一个script标签包裹的元素，不过这个script需要设置一个ID名
+然后通过这个ID名来引用这个标签里面的内容：例如：
+<script type="text/ng-template" id="customTags2">
+        <div>
+            hello {{name}}
+        </div>
+</script>
+注意：一个元素上面有多个指令时，这些指令中间只能有一个template.
+
+		templateUrl:'tmp/abc.html',
+		templateUrl:'custtomTags2',
+		template:'<div>新数据<span ng-transclude></span></div>'
+
+/transclude为true时，上面的内容会把原内容放置在新内容的ng-transclude标签内
+		transclude:true,
+
+/replace为true时，上面的内容会连带替换标签/
+           	replace:true，
+
+/priority/表示标签执行的顺序，优先级，从大到小依次执行
+		priority: 0,
+
+//terminal为true时，小于当前属性directive的值的属性都不会执行
+            	terminal:true
+
+/
+        }
+    });
+
+}])
+
+.directive('customTags',function(){
+        return {
+            restrict : 'ECAM',
+            template : '<div>{{user.name}}</div>',
+            replace : true,
+            compile:function(tElement,tAttrs,transclude){
+
+                tElement.append(angular.element('<div>{{user.name}}{{user.count}}</div>'));
+
+                // 编译阶段...
+                console.log('customTags compile 编译阶段...');
+
+                return {
+                    // 表示在编译阶段之后，指令连接到子元素之前运行
+                    pre:function preLink(scope,iElement,iAttrs,controller){
+                        console.log('customTags preLink..')
+                    },
+                    // 表示在所有子元素指令都连接之后才运行
+                    post:function postLink(scope,iElement,iAttrs,controller){
+
+                        iElement.on('click',function(){
+                            scope.$apply(function(){
+                                scope.user.name = 'click after';
+                                scope.user.count = ++i;
+                                // 进行一次 脏检查
+                            });
+                        })
+
+                        console.log('customTags all child directive link..')
+                    }
+                }
+                // 可以直接返回 postLink
+                // return postLink function(){
+                    // console.log('compile return fun');
+                //}
+            },
+            // 此link表示的就是 postLink
+            link:function(){
+//                iElement.on('click',function(){
+//                    scope.$apply(function(){
+//                        scope.user.name = 'click after';
+//                        scope.user.count = ++i;
+//                        // 进行一次 脏检查
+//                    });
+//                })
+            }
+        }
+    })
+
+    .directive('customTags2',function(){
+        return {
+            restrict : 'ECAM',
+            replace : true,
+            compile:function(){
+                // 编译阶段...
+                console.log('customTags2 compile 编译阶段...');
+
+                return {
+                    // 表示在编译阶段之后，指令连接到子元素之前运行
+                    pre:function preLink(){
+                        console.log('customTags2 preLink..')
+                    },
+                    // 表示在所有子元素指令都连接之后才运行
+                    post:function postLink(){
+                        console.log('customTags2 all child directive link..')
+                    }
+                }
+
+            }
+        }
+    })
+
+
+    .directive('customTags3',function(){
+
+       // return postLink;
+       return function(){
+
+       }
+    })
+
+    .controller('firstController', ['$scope', function ($scope) {
+        $scope.users = [
+            {
+                id:10,
+                name:'张三'
+            },
+            {
+                id:20,
+                name:'李四'
+            }
+        ];
+    }]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+angular.module('myApp', [])
+
+    .directive('bookList', function () {
+        return {
+            restrict: 'ECAM',
+            controller: function ($scope) {
+                $scope.books = [
+                    {
+                        name: 'php'
+                    },
+                    {
+                        name: 'javascript'
+                    },
+                    {
+                        name: 'java'
+                    }
+                ];
+                $scope.addBook = function(){
+
+                }
+                this.addBook = function(){
+                    // ...
+                }
+            },
+            controllerAs:'bookListController',
+            template: '<ul><li ng-repeat="book in books">{{book.name}}</li></ul>',
+            replace:true,
+            link:function(scope,iEelement,iAttrs,bookListController){
+                iEelement.on('click',bookListController.addBook)
+            }
+        }
+
+    })
+
+    .controller('firstController', ['$scope', function ($scope) {
+        // console.log($scope);
+
+
+    }]);
+
+angular.module('myApp', [])
+
+    .directive('bookList', function () {
+        return {
+            restrict: 'ECAM',
+            controller: function ($scope) {
+                $scope.books = [
+                    {
+                        name: 'php'
+                    },
+                    {
+                        name: 'javascript'
+                    },
+                    {
+                        name: 'java'
+                    }
+                ];
+
+                this.addBook = function(){
+
+                    $scope.$apply(function(){
+                        $scope.books.push({
+                            name:'Angularjs'
+                        })
+                    });
+                }
+            },
+            controllerAs:'bookListController',//给controller添加一个别名，方便依赖注入时使用。
+            template: '<div><ul><li ng-repeat="book in books">{{book.name}}</li></ul><book-add></book-add></div>',
+            replace:true
+
+        }
+
+    })
+
+    .directive('bookAdd',function(){
+        return {
+            restrict:'ECAM',
+            require:'^bookList',//添加一个依赖，名字为bookList的指令，然后就可以调用这个指令里面的属性和方法，^为向上查找该指令
+            template:'<button type="button">添加</button>',
+            replace:true,
+            link:function(scope,iElement,iAttrs,bookListController){
+                iElement.on('click',bookListController.addBook);
+            }
+        }
+    })
+
+    .controller('firstController', ['$scope', function ($scope) {
+        // console.log($scope);
+
+
+    }]);
+
+
+angular.module('myApp', [])
+
+    .directive('bookList', function () {
+        return {
+            restrict: 'ECAM',
+            controller: function ($scope) {
+
+                // &books
+                // $scope.books = $scope.a();
+
+                // =books;
+                // $scope.books = $scope.b;
+                // $scope.b.push({name:'nodejs'});
+
+                console.log($scope.c);
+
+            },
+            // 创建一个有继承链的独立作用域
+            // scope:true,
+
+            // 当为对象的时候也会创建一个独立的作用域
+            scope:{
+		//通过c创建一个叫parent-title的属性，然后在标签里面给这个属性赋父级属性的值，
+		//然后通过这个属性再把父级的属性绑定到这个c这个属性上
+               // books="books" parent-books="books" parent-title="{{title}}"
+	
+                // 将父元素books封装成一个a函数
+                // a:'&books'
+                // 双向绑定 b = parentBooks属性对应的父作用域的表达式
+                // b:'=parentBooks'
+
+                // 使用简单数据类型的方法单项绑定父元素/只读
+                c:'@parentTitle'
+            },
+            controllerAs:'bookListController',
+            template: '<div><ul><li ng-repeat="book in books">{{book.name}}</li></ul></div>',
+            replace:true
+
+        }
+
+    })
+
+
+    .controller('firstController', ['$scope', function ($scope) {
+        console.log($scope);
+
+        $scope.books = [
+            {
+                name: 'php'
+            },
+            {
+                name: 'javascript'
+            },
+            {
+                name: 'java'
+            }
+        ];
+
+        $scope.title = '张三';
+
+    }]);
+
+
+<div ng-controller="firstController">
+        {{
+            books
+        }}
+        <div book-list books="books" parent-books="books" parent-title="{{title}}">
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+angular.module('myApp', [])
+    // 数据
+    .factory('Data', function () {
+        return [
+            {
+                title: 'no1',
+                content: 'no1-content'
+            },
+            {
+                title: 'no2',
+                content: 'no2-content'
+            },
+            {
+                title: 'no3',
+                content: 'no3-content'
+            }
+        ];
+    })
+    // 控制器
+    .controller('firstController', ['$scope','Data',function ($scope,Data) {
+        $scope.data = Data;
+    }])
+
+    .directive('kittencupGroup',function(){
+        return {
+            restrict:'E',
+            replace:true,
+            template:'<div class="panel-group" ng-transclude></div>',
+            transclude:true,
+            controllerAs:'kittencupGroupContrller',
+            controller:function(){
+                this.groups = [];
+
+                this.closeOtherCollapse = function(nowScope){
+                    angular.forEach(this.groups,function(scope){
+                        if(scope !== nowScope){
+                            scope.isOpen = false;
+                        }
+                    })
+                }
+            }
+        }
+    })
+
+    .directive('kittencupCollapse',function(){
+        return {
+            restrict:'E',
+            replace:true,
+            require:'^kittencupGroup',
+            templateUrl:'app/tmp/kittencupCollapse.html',
+            scope:{
+                heading:'@'
+            },
+            link:function(scope,element,attrs,kittencupGroupContrller){
+                scope.isOpen = false;
+
+                scope.changeOpen = function(){
+                    scope.isOpen = !scope.isOpen;
+
+                    kittencupGroupContrller.closeOtherCollapse(scope);
+                }
+
+
+                kittencupGroupContrller.groups.push(scope);
+            },
+            transclude:true
+        }
+    })

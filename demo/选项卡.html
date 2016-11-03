@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>		
+		<style type="text/css">
+			ul,li{margin: 0;padding: 0;}
+			li{outline-style: none;}
+			#box{
+				background: cadetblue;
+				width:900px;
+				height:400px;
+				padding: 10px;
+				position: relative;
+			}
+			div{
+				position: absolute;
+				width: 750px;
+				height: 32px;
+				bottom: 10px;
+				right: 10px;
+			}
+			li{
+				height: 100px;
+				width: 150px;
+				position: absolute;
+				left: 10px;
+			}
+			p{	
+				margin: 0;
+				border: 1px solid red;
+				text-align: center;
+				line-height: 30px;
+				width: 200px;
+				float: left;
+				background: #808080;
+				opacity: 0.5;
+			}
+			img{
+				position: absolute;
+				left: 160px;
+				top: 10px;
+				width: 750px;
+				height: 400px;
+			}		
+		</style>
+	<script>
+		window.onload=function(){
+			var obox=document.getElementById('box');
+			var acolor=['red','yellow','blue','black']	
+			var ali=obox.getElementsByTagName('li');
+			 for(var i=0;i<ali.length;i++){
+			 	ali[i].style.top=i*100+10+'px';
+			 	ali[i].style.background=acolor[i];
+			 }
+			bbq(['img/2.jpg','img/5.jpg','img/8.jpg'] , ['dggd','v43v3','fsfvv'] );
+			ali[0].onclick=function(){bbq(['img/2.jpg','img/5.jpg','img/8.jpg'] , ['dggd','v43v3','fsfvv'] );}
+			ali[1].onclick=function(){bbq(['img/25.jpg','img/11.jpg','img/18.jpg','img/14.jpg'] , ['dggd','v43v3','fsfvv','teggd'] );}
+			ali[2].onclick=function(){bbq(['img/21.jpg','img/2.jpg','img/29.jpg','img/23.jpg','img/16.jpg'] , ['dggd','v43v3','fsfvv','teggd','v43v3'] );}
+			ali[3].onclick=function(){bbq(['img/28.jpg','img/1.jpg','img/31.jpg','img/12.jpg','img/22.jpg','img/25.jpg'] , ['dggd','v43v3','fsfvv','teggd','v43v3','v43v3',] )	;}	
+		}
+			function bbq ( aimg , arrp ){
+			var ombox=document.getElementById('mbox');
+			var ap=ombox.getElementsByTagName('p');
+			var oimg=document.getElementsByTagName('img')[0];
+			ombox.innerHTML=null;
+			oimg.src=aimg[0];
+			for(var i=0;i<aimg.length;i++){
+				ombox.innerHTML+='<p>'+arrp[i]+'</p>';
+			}	
+			for(var i=0;i<ap.length;i++){	
+				
+				ap[i].index=i;
+				ap[i].style.width=750/(aimg.length)-2+'px';
+				ap[i].onmouseover=function(){
+					this.style.background='red';
+					oimg.src=aimg[this.index];
+				}
+				ap[i].onmouseout=function(){
+					this.style.background='#808080';
+				}
+			}
+		}		
+	</script>		
+	</head>
+	<body>
+	<div id="box">
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>			
+		</ul>
+		<img src="img/11.jpg"/>
+		<div id="mbox">
+		</div>
+	</div>	
+	</body>
+</html>

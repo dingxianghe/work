@@ -1,0 +1,37 @@
+1.png图片灰色背景解决方案(加载一个JS文件)
+
+<!--[if IE 6]>
+<script src="js/DD_belatedPNG_0.0.8a.js"><script>
+<script>
+DD_belatedPNG.fix('*');
+<script>
+<![endif]-->
+
+2.在浮动的情况下，父元素清浮动，下magin会失效
+
+给父级添加内padding来填充
+
+3.IE6下 span的高度不能小于19px；要么就必须加个over:hidden
+
+
+1.cursor:pointer   鼠标移上去会有一个手
+2.box-shadow:2px 3px 0 #e3e3e3;	边框阴影
+阴影右偏移 阴影下偏移 阴影扩散 阴影颜色
+ text-shadow			文字阴影
+3.text-decoration:underline 鼠标移过-下划线
+4.border:1px solid transparent  透明边框
+5.a标签的链接不需要时设置 href="javascript:;"
+6.<sup>: 上标 
+
+样式重置
+body,h1,h2,h3,p,dl,dd,ul,ol,form,input,textarea,th{内外清零}
+em { font-style:normal; }
+li { list-style:none; }
+a { test-decoration:none; }
+img { border:none; vertical-align:top; }
+table { border-collapse:collapse; }
+input,textarea { outline:none; }
+textarea { resize:none; overflow:auto; }
+body { font-size:12px; font-family:"微软雅黑"； }
+
+

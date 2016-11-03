@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#box{
+				width: 100px;
+				height: 300px;
+				padding: 10px;
+				position: relative;
+				overflow: hidden;
+			}
+			input{
+				width: 100px;
+				height: 30px;
+				position: absolute;
+				background: gray;
+				border: none;
+			}
+			#btn1{top: 0px;z-index: 1;}
+			#btn2{bottom:0px;z-index: 1;}
+			img{
+				width: 100px;
+				height: 70px;
+			}
+			#box1{
+				position: absolute;
+				z-index: 0;
+			}
+		</style>
+		<script>
+			window.onload=function(){
+				var abtn1=document.getElementById('btn1');
+				var abtn2=document.getElementById('btn2');
+				var abox1=document.getElementById('box1');
+				var timer=null;
+				var i=0;
+					abtn1.onmousedown=function(){
+						timer=setInterval(function(){if(i>-220){abox1.style.top=i+'px';i--}},14)}
+					abtn2.onmousedown=function(){
+						timer=setInterval(function(){if(i<30){abox1.style.top=i+'px';i++}},14)}
+					abtn1.onmouseup=function(){clearInterval( timer );}
+					abtn2.onmouseup=function(){clearInterval( timer );}	
+			}
+		</script>	
+	</head>
+	<body>
+		<div id="box">
+			<input id="btn1" type="button" value="向上" />
+				<div id="box1">
+				<img src="img/1.jpg"/>
+				<img src="img/2.jpg"/>
+				<img src="img/3.jpg"/>
+				<img src="img/4.jpg"/>
+				<img src="img/5.jpg"/>
+				<img src="img/6.jpg"/>
+				<img src="img/7.jpg"/>
+				</div>
+			<input id="btn2" type="button" value="向下" />
+		</div>
+	</body>
+</html>

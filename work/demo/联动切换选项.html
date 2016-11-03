@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	<style>
+		#bbox{
+			position: relative;
+			margin: 100px auto;
+			width:830px;
+			height:520px;
+			background:url(img/8.jpg) no-repeat;
+		}
+		#btn1,#btn2{
+			position: absolute;
+			top: 50px;
+			left: 30px;
+		}
+		#btn2{
+			left: 100px;
+			}
+		img{
+			width: 425px;
+			height: 235px;
+			position: absolute;
+			top: 105px;
+			left: 50px;	
+		}
+		#box2 img{
+			width: 240PX;
+			left: 530px;			
+		}
+		#p1,#p3{
+				position: absolute;
+				left: 225px;
+				top: 340px;
+		}
+		#p3{left: 620px;}
+		#p2,#p4{
+			position: absolute;
+			top: 375px;
+			left: 50px;
+		}
+		#p4{left:530px;
+		}	
+	</style>
+	<script>
+		window.onload=function(){
+			var obtn1=document.getElementById('btn1');
+			var obtn2=document.getElementById('btn2');
+			var ap=document.getElementsByTagName('p');
+			var aimg=document.getElementsByTagName('img');
+			var a=0;
+			var b=0;			
+			var img1=['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg']
+			var img2=['img/5.jpg','img/6.jpg','img/7.jpg']
+			aimg[0].src=img1[0];
+			aimg[0].index=0;
+			aimg[1].src=img2[0];
+			aimg[1].index=0;
+			ap[1].innerHTML=1+'/'+img1.length;
+			ap[3].innerHTML=1+'/'+img2.length;
+			obtn1.onclick=function(){
+				aimg[0].index--;
+				aimg[1].index--;
+				if(aimg[0].index<0){aimg[0].index=3}
+				aimg[0].src=img1[aimg[0].index];	
+				if(aimg[1].index<0){aimg[1].index=2}
+				aimg[1].src=img2[aimg[1].index];
+				ap[1].innerHTML=aimg[0].index+1+'/'+img1.length;
+				ap[3].innerHTML=aimg[1].index+1+'/'+img2.length;
+				a=aimg[0].index+1; b=aimg[1].index+1;
+				ap[0].innerHTML='第一组第'+a+'张';
+				ap[2].innerHTML='第二组第'+b+'张';
+			}
+			obtn2.onclick=function(){
+				wc();
+				we();
+			}
+			aimg[0].onclick=wc;	
+			aimg[1].onclick=we;
+			function wc(){
+				aimg[0].index++;
+				if(aimg[0].index>3){aimg[0].index=0}
+				aimg[0].src=img1[aimg[0].index];
+				ap[1].innerHTML=aimg[0].index+1+'/'+img1.length;
+				a=aimg[0].index+1;
+				ap[0].innerHTML='第一组第'+a+'张';
+			}
+			function we(){
+				aimg[1].index++;
+				if(aimg[1].index>2){aimg[1].index=0}
+				aimg[1].src=img2[aimg[1].index];
+				ap[3].innerHTML=aimg[1].index+1+'/'+img2.length;
+				b=aimg[1].index+1;
+				ap[2].innerHTML='第二组第'+b+'张';
+			}
+		}	
+	</script>	
+	</head>	
+	<body>
+		<div id="bbox">
+			<button id="btn1" value="上一组">上一组</button>
+			<button id="btn2" value="下一组">下一组</button>
+			<div id="box1">
+				<img/>
+				<p id="p1">第一组第1张</p>
+				<p id="p2"></p>
+			</div>
+			<div id="box2">
+				<img/>
+				<p id="p3">第二组第1张</p>
+				<p id="p4"></p>
+			</div>
+		</div>
+	</body>
+</html>

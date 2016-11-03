@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			ul,li,p{margin: 0;padding: 0;}
+			li{
+				width: 500px;
+				height: 30px;
+				border: 1px solid green;
+				text-indent: 2em;
+				outline-style: none;
+				line-height: 30px;	
+			}
+			p{
+				float: left;
+			}
+			input{
+				margin: 5px;
+			}	
+		</style>
+		<script>
+			window.onload=function(){
+				op('li1');
+				op('li2');
+				function op(yu){
+				var ali=document.getElementById(yu);
+				ali.innerHTML='<p>秒味远程课堂</p><img src="dabing.gif" />';
+				var aimg=ali.getElementsByTagName('img')[0];
+				var ap=ali.getElementsByTagName('p')[0];
+				aimg.onclick=cc;
+				function cc(){
+					
+					ali.innerHTML='<input class="input" type="text" /><input class="input" type="button" value="保存" /><input class="input" type="button" value="取消" />'
+				var ai=ali.getElementsByClassName('input');
+					ai[1].onclick=function(){
+						ali.innerHTML='<p>'+ai[0].value+'</p><img src="dabing.gif" />'
+						var aimg=ali.getElementsByTagName('img')[0];						
+						aimg.onclick=cc;
+					}
+					ai[2].onclick=function(){
+						ai[0].value='';
+						ali.innerHTML='<p>秒味远程课堂</p><img src="dabing.gif" />';
+						var aimg=ali.getElementsByTagName('img')[0];
+						aimg.onclick=cc;
+					}
+				}
+				}
+				
+			}
+		</script>
+	</head>
+	<body>
+		<ul>
+			<li>分类名称</li>
+			<li id="li1">
+			</li>
+			<li id="li2">
+			</li>
+		</ul>
+	</body>
+</html>

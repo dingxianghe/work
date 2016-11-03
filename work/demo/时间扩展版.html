@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		#box{
+			width: 800px;
+			height: 140px;
+			position: relative;
+			margin:100px auto;
+			overflow: hidden;
+		}
+		.img1,.img2{
+			position: absolute;
+			width: 100px;
+			top: 0px;
+		}
+		.img2{
+			top:140px;
+		}
+	</style>
+	<script src="js/miaov.js"></script>
+	<script>
+		window.onload=function(){
+			var aimg1=document.getElementsByClassName('img1')
+			var aimg2=document.getElementsByClassName('img2')
+			var myTime=new Date();
+			var iHours = myTime.getHours();
+			var iMin = myTime.getMinutes();
+			var iSec = myTime.getSeconds();
+			var srt=totwo(iHours)+totwo(iMin)+totwo(iSec); 
+			var off=true;
+			var jj=null;
+			
+			for(var i=0;i<aimg1.length;i++){
+				aimg1[i].index=i;
+				aimg1[i].style.left=i*100+'px';
+			}
+			for(var i=0;i<aimg2.length;i++){
+				aimg2[i].style.left=i*100+'px';
+				aimg2[i].index=i;
+			}
+			for(var i=0,j=0;i<aimg1.length;i++){
+				if(i!=2&&i!=5){
+						aimg1[i].src=srt.charAt(j)+'.JPG';j++;
+				}
+			}
+			setInterval(
+				function(){
+					if(off){
+						tim();off=false
+						aimg1[2].src='colon.JPG';aimg1[5].src='colon.JPG';
+						}else{tim();off=true
+						aimg1[2].src='colon1.JPG';aimg1[5].src='colon1.JPG';
+						}
+					},1000)
+			
+			function tim(){
+			var myTime=new Date();
+			var iHours = myTime.getHours();
+			var iMin = myTime.getMinutes();
+			var iSec = myTime.getSeconds();
+			var str=totwo(iHours)+totwo(iMin)+totwo(iSec); 
+			for(var i=0,j=0;i<aimg1.length;i++){
+				if(i!=2&&i!=5){
+					
+					if(srt.charAt(j)!=str.charAt(j)){
+						if(off){
+						aimg2[i].src=str.charAt(j)+'.JPG';
+						jj=aimg1[i];
+						aimg2[i].style.top=140+'px';
+						doMove(aimg2[i],'top',20,0);
+						doMove(aimg1[i],'top',20,-140)}
+						else{
+						aimg1[i].src=str.charAt(j)+'.JPG';	
+						aimg1[i].style.top=140+'px';
+						jj=aimg2[i];
+						doMove(aimg1[i],'top',20,0);
+						doMove(aimg2[i],'top',20,-140)
+						}
+					}j++;
+				}
+			}srt=str;
+			}
+			
+			function tt( obj){
+				obj.style.top=140+'px';
+			}
+			
+			function totwo(n){
+				return n<10?'0'+n:''+n;
+			}
+		}
+	</script>
+	<body>
+		<div id="box">
+			<img class='img1' src="0.JPG"/>
+			<img class='img1' src="0.JPG"/>
+			<img class='img1' src="colon.JPG"/>
+			<img class='img1' src="0.JPG"/>
+			<img class='img1' src="0.JPG"/>
+			<img class='img1' src="colon.JPG"/>
+			<img class='img1' src="0.JPG"/>
+			<img class='img1' src="0.JPG"/>
+			<img class='img2' src="0.JPG"/>
+			<img class='img2' src="0.JPG"/>
+			<img class='img2' src="colon.JPG"/>
+			<img class='img2' src="0.JPG"/>
+			<img class='img2' src="0.JPG"/>
+			<img class='img2' src="colon.JPG"/>
+			<img class='img2' src="0.JPG"/>
+			<img class='img2' src="0.JPG"/>	
+		</div>		
+	</body>
+</html>

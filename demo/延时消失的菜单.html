@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			window.onload=function(){
+				var abut=document.getElementsByTagName('input');
+				var abody=document.getElementsByTagName('body')[0];
+				var abb=['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg']
+				var timer=null;
+				var p=0;
+				var q=null;
+				for(var i=0;i<abut.length;i++){
+					abody.innerHTML+='<img '+' src='+abb[i]+'>';	
+				}
+				var aimg=document.getElementsByTagName('img');
+				for(var i=0;i<abut.length;i++){
+					aimg[i].index=i;
+					abut[i].index=i;
+					aimg[i].style.left=i*105+10+'px';
+				}
+				for(var i=0;i<abut.length;i++){
+					abut[i].onmouseover=hr;
+					aimg[i].onmouseover=hr;
+					abut[i].onmouseout=he;
+					aimg[i].onmouseout=he;
+				}
+				function hr(){
+					q=this.index;
+					clearTimeout(timer);
+					aimg[q].style.display='block';
+					if(q!==p){aimg[p].style.display='none'}		
+				}
+				function he(){
+					p=this.index;
+					timer=setTimeout(function(){aimg[p].style.display='none'},300)	
+				}			
+			}
+		</script>
+		<style>
+			img{
+				position: absolute;
+				top: 33px;
+				display: none;
+				height: 100px;
+				width: 105px;
+			}
+			input{
+				width: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" value="首页" />
+		<input type="button" value="关于我们" />
+		<input type="button" value="作品" />
+		<input type="button" value="博客" />
+	</body>
+</html>

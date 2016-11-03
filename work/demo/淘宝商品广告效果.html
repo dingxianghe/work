@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#box{
+				width: 700px;
+				height: 400px;
+				padding: 10px;
+				border: 1px solid red;
+				position: relative;
+			}
+			input{
+				width:80px;
+				height: 50px;
+				margin: 5px;
+				position: absolute;
+				background: white;
+				border: 1px solid red;
+			}
+			img{
+				position: absolute;
+				width:500px;
+				height:400px;
+				left: 110px;
+			}
+		</style>
+		<script>
+			window.onload=function(){
+				var abox=document.getElementById('box');
+				var abut=document.getElementsByTagName('input');
+				var aimg=abox.getElementsByTagName('img');
+				var arrimg=["img/1.jpg",'img/2.jpg','img/3.jpg','img/4.jpg','img/5.jpg','img/6.jpg','img/7.jpg','img/8.jpg','img/9.jpg','img/10.jpg','img/11.jpg','img/12.jpg','img/13.jpg','img/14.jpg']
+				var arrp=['连衣裙','雪纺','T徐','铅笔裤','婚纱','外套','连体裤','宝宝','凉鞋','单鞋','太阳镜','丝袜','帆布鞋','情侣装'];
+				var qq=null;
+				var j=0;
+				var w=0;
+				for(var i=0;i<arrp.length;i++){
+					abox.innerHTML+='<input type="button" value="'+arrp[i]+'"/>';
+				}
+				for(var i=0;i<arrp.length;i++){
+					abut[i].index=i;
+					if(i<7){abut[i].style.top=i*57+5+'px';}
+					else{abut[i].style.top=i*57-390+'px';abut[i].style.right=10+'px';}
+					abut[i].onmouseover=function(){
+						qq=this;
+						this.style.background='red';
+						aimg[0 ].src=arrimg[this.index];
+						clearInterval(timer);
+						abut[w].style.background='white';
+					}
+					abut[i].onmouseout=function(){
+						qq.style.background='white';
+						abc();
+					}
+				}
+				abc();
+				function abc(){
+					timer=setInterval(function(){
+					abut[w].style.background='white';
+					abut[j].style.background='red';
+					aimg[0 ].src=arrimg[j];
+					w=j;j++;j%=14;
+				},1000)}				
+			}
+		</script>		
+	</head>
+	<body>
+		<div id="box">
+			<img />
+		</div>
+	</body>
+</html>

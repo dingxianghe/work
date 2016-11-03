@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+#box { margin:100px auto;}
+body { background:black;}
+#c1 { background:#FFF;}
+</style>
+</head>
+<body>
+<div id="box">
+	<canvas id="c1" width="600px" height="600px"></canvas>
+</div>
+</body>
+<script>
+var abox=document.getElementById('box');
+var ac=document.getElementById('c1');
+var agc=ac.getContext('2d');
+var timer=null;
+var arr=[];
+var att=[];
+var ang=0;
+
+var oimg=new Image();
+oimg.src='person.png'
+
+oimg.onload=function(){	
+
+	ac.onmousemove=function(ev){  
+		var ev=ev||event;
+		var x=ev.clientX-ac.offsetLeft;
+		var y=ev.clientY-ac.offsetTop;
+		if(y>=200){
+			ang=(Math.atan((x-300)/(200-y))*180/Math.PI+180)*Math.PI/180;
+		}else{
+		ang=Math.atan((x-300)/(200-y));
+		}
+	}
+	
+	ac.onmousedown=function(ev){
+		var iatt={};
+		var ev=ev||event;
+		var x=ev.clientX-ac.offsetLeft-300;
+		var y=ev.clientY-ac.offsetTop-200;
+		var c=Math.floor(Math.sqrt(x*x+y*y)*100)/100;
+		iatt.y=200;
+		iatt.x=300;
+		iatt.a=3*x/c;
+		iatt.b=3*y/c;
+		att.push(iatt);	
+	}
+		
+	timer=setInterval(function(){
+		agc.clearRect(0,0,ac.width,ac.height)
+
+		agc.beginPath();
+		agc.arc(300,200,200,-90*Math.PI/180,180*Math.PI/180,false)
+		agc.stroke();
+		
+		agc.beginPath();
+		agc.arc(250,200,150,180*Math.PI/180,360*Math.PI/180,false)
+		agc.stroke();
+		
+		agc.beginPath();
+		agc.arc(400,200,20,0*Math.PI/180,360*Math.PI/180,false)
+		agc.stroke();
+			
+		agc.save();
+		agc.translate(300,200)
+		agc.rotate(ang)
+		agc.translate(-40,-40)	
+		agc.drawImage(oimg,0,0);
+		agc.restore();
+		
+		agc.save();
+		agc.font='40px impact';
+		agc.shadowColor='yellow';
+		agc.shadowOffsetX=8;
+		agc.shadowOffsety=8;
+		agc.shadowBlur=3;
+		agc.textBaseline='top';
+		agc.fillStyle='red';
+		var w=agc.measureText('简易祖玛').width;
+		agc.fillText('简易祖玛',(ac.width-w)/2,450);
+		agc.restore();
+
+		for(var i=0;i<arr.length;i++){
+			
+			if(arr[i].num>450){
+				alert('游戏结束');
+				window.location.reload();
+			}else if(arr[i].num>270){				
+				arr[i].x=250+Math.sin(arr[i].num*Math.PI/180)*150;
+				arr[i].y=200-Math.cos(arr[i].num*Math.PI/180)*150;
+				arr[i].num+=1.3;	
+			}else{
+				arr[i].x=300+Math.sin(arr[i].num*Math.PI/180)*200;
+				arr[i].y=200-Math.cos(arr[i].num*Math.PI/180)*200;
+				arr[i].num++;	
+			}
+			
+			agc.beginPath();
+			agc.arc(arr[i].x,arr[i].y,20,0*Math.PI/180,360*Math.PI/180,false)
+			agc.fill();
+						
+			for(var j=0;j<att.length;j++){
+				var A=(arr[i].x-att[j].x)*(arr[i].x-att[j].x);
+				var B=(arr[i].y-att[j].y)*(arr[i].y-att[j].y);
+				if(Math.sqrt(A+B)<40){					
+					arr.splice(i,1);
+					att.splice(j,1);					
+				}						
+			}						
+		}
+		
+		for(var i=0;i<att.length;i++){
+			agc.save();	
+			agc.beginPath();
+			agc.fillStyle='red';
+			agc.arc(att[i].x,att[i].y,20,0*Math.PI/180,360*Math.PI/180,false)
+			agc.fill();
+			agc.closePath()
+			agc.restore();
+			att[i].x+=att[i].a;
+			att[i].y+=att[i].b;
+		}	
+	},1000/60);	
+}	
+
+	setInterval(function(){
+		var inew={};
+		inew.x=0;
+		inew.y=0;
+		inew.num=0;		
+		arr.push(inew);
+		},200)
+		
+</script>
+</html>

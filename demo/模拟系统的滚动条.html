@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		#box,#box1{
+			width: 20px;
+			height:200px;
+			left: 210px;
+			background:black;
+			position: absolute;	
+		}
+		#box{
+			display: none;
+		}
+		#box1{
+			background:red;
+			left:0px;
+		}
+		#box2{
+			width: 200px;
+			height: 196px;
+			overflow: hidden;
+			margin-bottom:5px ;
+			border: 2px solid black;
+		}
+		ul{
+			font-size: 24px;
+			list-style: none;
+			margin: 0px;
+			padding: 0px;
+		}		
+	</style>
+	<body>
+		<div id="box">
+			<div id="box1"></div>
+		</div>
+		<div id="box2">
+			<ul></ul>
+		</div>
+		<input id="text" type="text" />
+		<input id="btn" type="button" value="发送内容" />	
+	</body>
+	<script>
+		var oBox=document.getElementById('box');
+		var oBox1=document.getElementById('box1');
+		var oBox2=document.getElementById('box2');
+		var oText=document.getElementById('text');
+		var oBtn=document.getElementById('btn');
+		var oUl=oBox2.getElementsByTagName('ul')[0];
+		
+		oBtn.onclick=function(){	
+			if(oText.value){
+				var oLi=document.createElement('li');
+				oLi.innerHTML=oText.value+'\n';
+				oText.value='';
+				oText.focus();
+				if(oUl.getElementsByTagName('li')[0]){
+					oUl.insertBefore(oLi,oUl.getElementsByTagName('li')[0]);
+				}else{
+					oUl.appendChild(oLi);
+				}	
+			}
+			oText.focus();
+			var n=oBox2.offsetHeight/oUl.scrollHeight
+			var T=0;
+			if(n<1){
+				oBox.style.display='block';
+				oBox1.style.height=oBox.offsetHeight*n+'px';
+				oBox1.onmousedown=function(ev){
+					var ev=ev||event;
+					var ly=ev.clientY-oBox1.offsetTop;
+					document.onmousemove=function move(ev){
+						var ev=ev||event;
+						T=ev.clientY-ly;
+						yidong(T);
+						return false;
+					}
+					document.onmouseup=function(){
+						document.onmousemove=null;
+						document.onmouseup=null
+					}
+					return false;
+				}
+				
+				function yidong(T){
+					var oT=oBox.offsetHeight-oBox1.offsetHeight;
+						if(T<0){
+							T=0;
+						}else if(T>oT){
+							T=oT;
+						}
+						oBox1.style.top=T+'px';
+						var o=oUl.scrollHeight-oBox2.clientHeight;
+						oUl.style.marginTop=-o*T/oT+'px';
+				}
+				
+				oBox.onmousewheel=fn;
+				if (oBox.addEventListener) {
+					oBox.addEventListener('DOMMouseScroll', fn, false);
+				}
+				
+				function fn(ev){
+					var ev=ev||event;
+					var b = true;
+					if (ev.wheelDelta) {
+						b = ev.wheelDelta > 0 ? true : false;
+					} else {
+						b = ev.detail < 0 ? true : false;
+					}					
+					b?T-=5:T+=5;
+					var oT=oBox.offsetHeight-oBox1.offsetHeight;
+						if(T<0){
+							T=0;
+						}else if(T>oT){
+							T=oT;
+						}
+					yidong(T);
+					if (ev.preventDefault) {
+						ev.preventDefault();
+					}		
+					return false;
+				}
+			}		
+		}		
+	</script>
+</html>

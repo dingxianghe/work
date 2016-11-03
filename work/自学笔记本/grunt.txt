@@ -1,0 +1,21 @@
+将Grunt命令行（CLI）安装到全局环境中
+npm install -g grunt-cli
+
+
+package.json 和 Gruntfile 
+
+将命令行的当前目录转到项目的根目录下。
+npm install grunt --save-dev //将grunt作为项目依赖安装，防止文件丢失
+npm init   
+新建一个Gruntfile.js文件
+执行 grunt 命令。
+
+
+
+
+
+
+
+
+
+

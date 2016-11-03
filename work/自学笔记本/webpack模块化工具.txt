@@ -1,0 +1,172 @@
+
+Webpack 会分析入口文件，解析包含依赖关系的各个文件。这些文件（模块）都打包到 bundle.js(入口文件) 。Webpack 会给每个模块分配一个唯一的 id 并通过这个 id 索引和访问模块。在页面启动时，会先执行 entry.js 中的代码，其它模块会在运行 require 的时候再执行（按需加载）。
+
+直接在目录里面运行命令行，打包成出口文件
+
+webpack 入口文件名 出口文件名
+
+开启监听模式(每一次改动依赖的文件将及时更新出口文件，而且只更新改动的部分)
+
+webpack 入口文件名 出口文件名 -watch
+
+module.exports=指向的值为调用的时候得到的值；
+var re=require('./app');
+//re的值就是这个文件中exports中指向的值
+
+webpack.config.js配置文件
+//配置好参数后 直接在命令行用webpack启动,非全局安装需使用node_modules/.bin/webpack
+
+注：“__dirname”是node.js中的一个全局变量，它指向当前执行脚本所在的目录。
+
+配置文件
+
+devserver配置选项	功能描述
+
+contentBase	默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录（本例设置到“public"目录）
+
+port	设置默认监听端口，如果省略，默认为”8080“
+
+inline	设置为true，当源文件改变时会自动刷新页面
+
+colors	设置为true，使终端输出的文件为彩色的
+historyApiFallback	在开发单页应用时非常有用，它依赖于HTML5 history API，如果设置为true，所有的跳转将指向index.html
+
+
+
+module.exports = {
+ 
+	 devtool: 'eval-source-map',
+
+     //配置生成Source Maps，选择合适的选项
+	 entry:  __dirname + "/app/main.js",
+ 	//入口文件
+	 output: {
+    				//出口文件  
+		path: __dirname + "/public",
+   //打包后的文件存放的地方,
+		filename: "bundle.js"
+  		 //出口文件名
+	},
+
+  
+
+	devServer: {
+    
+		contentBase: "./public",//本地服务器所加载的页面所在的目录
+    				colors: true,//终端中输出结果为彩色
+    
+		historyApiFallback: true,//不跳转
+    
+		inline: true//实时刷新
+  
+	} ,
+	module: {   //在配置文件里添加JSON loader
+
+ 	loaders: [
+      	{
+         test: /\.json$/, // 一个匹配loaders所处理的文件的拓展名的正则表达式（必须）
+         loader: "json"   //loader的名称（必须）
+        },
+	{
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel',//在webpack的module部分的loaders里进行配置即可
+        query: {
+         	 presets: ['es2015','react']
+       	    }
+    	},
+	{
+        test: /\.css$/,
+        loader: 'style!css？modules!postcss'//添加对样式表的处理
+        }
+        
+
+   ]
+  },
+	postcss: [
+   	 require('autoprefixer')//调用autoprefixer插件
+  	],	
+
+}
+
+在require（）加载一个CSS文件的时候，采用require("!style!css!./index.css")
+这种格式来加载
+
+开启编译的监听模式 缓存已经编译过的模块 提升编译速度
+ webpack --progress --colors --watch
+
+当然，使用 webpack-dev-server 开发服务是一个更好的选择。它将在 localhost:8080 启动一个 express 静态资源 web 服务器，并且会以监听模式自动运行 webpack，在浏览器打开 http://localhost:8080/ 或 http://localhost:8080/webpack-dev-server/ 可以浏览项目中的页面和编译后的资源输出，并且通过一个 socket.io 服务实时监听它们的变化并自动刷新页面。
+
+在package.json中对npm的脚本部分进行相关设置即可，设置方法如下。
+
+
+
+{
+  
+"name": "webpack-sample-project",
+ 
+"version": "1.0.0",
+  "description": 
+"Sample webpack project",
+  
+"scripts": {
+    
+	"start": "webpack" //配置的地方就是这里啦，相当于把npm的start命令指向webpack命令
+  },
+ 
+"author": "zhang",
+  
+"license": "ISC",
+  
+"devDependencies": {
+    
+	"webpack": "^1.12.9"
+ 
+ }
+
+}
+
+然后在命令行中使用npm run start就可以了
+
+
+Babel
+
+Babel的安装与配置
+Babel其实是几个模块化的包，其核心功能位于称为babel-core的npm包中，不过webpack把它们整合在一起使用，但是对于每一个你需要的功能或拓展，你都需要安装单独的包（用得最多的是解析Es6的babel-preset-es2015包和解析JSX的babel-preset-react包）。
+
+
+loader:加载器
+
+//全局安装webpack
+npm install -g webpack
+//安装webpack到你的项目目录
+npm install webpack --save-dev
+
+npm init初始化这个目录
+
+安装本地服务器
+npm install webpack-dev-server -g
+
+安装babel
+//npm一次性安装多个依赖模块，模块之间用空格隔开
+npm install --save-dev babel-core babel-loader babel-preset-es2015 babel-preset-react
+
+安装可以装换JSON的loader
+npm install --save-dev json-loader
+
+安装css预编译工具
+npm install css-loader style-loader
+
+安装react
+npm install --save react react-dom
+
+给CSS代码自动添加适应不同浏览器的CSS前缀
+安装postcss-loader 和 autoprefixer（自动添加前缀的插件）
+npm install --save-dev postcss-loader autoprefixer
+
+
+
+
+
+
+

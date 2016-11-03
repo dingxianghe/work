@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			p{display:inline-block; margin: 3px;}
+		</style>
+		<script>
+			window.onload=function(){
+				var aimg=document.getElementsByTagName('img');
+				var op=document.getElementsByTagName('p')[1];
+				var pp=['很差','较差','还行','推荐','力荐'];
+				var off=true;
+				var oo=0;
+				for(var i=0;i<aimg.length;i++){
+					aimg[i].index=i;
+					aimg[i].onmouseover=function(){
+						for(var i=0;i<aimg.length;i++){aimg[i].src='huise.gif';}
+					if(this.index<2){for(var i=0;i<=this.index;i++){aimg[i].src='wuse.gif';op.innerHTML=pp[this.index]}}
+					else{for(var i=0;i<=this.index;i++){aimg[i].src='huangse.gif';op.innerHTML=pp[this.index]}}
+					}
+					aimg[i].onmouseout=function(){
+						if(off){for(var i=0;i<aimg.length;i++){aimg[i].src='huise.gif';op.innerHTML='' }}
+						else{
+							if(oo<2){for(var i=0;i<=oo;i++){aimg[i].src='wuse.gif';op.innerHTML=pp[oo]}}
+							else{for(var i=0;i<=oo;i++){aimg[i].src='huangse.gif';op.innerHTML=pp[oo]}}}
+					}
+					aimg[i].onclick=function(){
+						oo=this.index;
+						if(this.index<2){for(var i=0;i<=this.index;i++){aimg[i].src='wuse.gif';op.innerHTML=pp[this.index]}}
+					else{for(var i=0;i<=this.index;i++){aimg[i].src='huangse.gif';op.innerHTML=pp[this.index]}}
+						off=false;
+					}
+				}				
+			}
+		</script>
+	</head>
+	<body>
+		<p id="bbox">总体评价：</p>
+		<img src="huise.gif" />
+		<img src="huise.gif" />
+		<img src="huise.gif" />
+		<img src="huise.gif" />
+		<img src="huise.gif" />
+		<p></p>
+	</body>
+</html>

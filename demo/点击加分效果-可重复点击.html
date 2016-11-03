@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		#bbox{
+			margin: 100px auto;
+			width:200px;
+			height: 100px;
+			padding: 20px;
+			border: 1px solid black;
+		}
+		#box{
+			width:198px;
+			height: 20px;
+			margin-top:78px;
+			border: 1px solid red;
+			position: relative;
+			background: url(color.gif) no-repeat;
+			background-position-x:-500pX;
+		}
+		p{
+			position: absolute;
+			display: inline;
+			left: 20px;
+			margin: 0;
+			top: 0px;
+			opacity:1;
+		}
+	</style>
+	<script src="js/miaov.js"></script>
+	<script>
+		window.onload=function(){
+			var abox=document.getElementById('box');
+			var asor=abox.getElementsByTagName('p');
+			var at=[];
+			var num=0;
+			var off=true;
+			for(var i=0;i<10;i++){
+				at+='<p>+1</p>';
+			}  
+			abox.innerHTML=at;	
+			for(var i=-0;i<10;i++){asor[i].style.left=i*20+'px';}
+			abox.onclick=function(){
+					if(off){
+					off=false;
+					doMove(abox,'backgroundPositionX',7,100,function(){
+						abox.style.backgroundPositionX=-500+'px';
+					});
+					abox.ok=setInterval(function(){					
+					if(num<9){
+					doMove(asor[num],'top',5,-70);
+					doMove(asor[num],'opacity',0.1,0);
+					num++;}
+					else if(num==9){
+					doMove(asor[num],'top',5,-70,function(){
+						for(var i=0;i<10;i++){asor[i].style.top=0+'px';doMove(asor[i],'opacity',0.1,1);}
+					});
+					doMove(asor[num],'opacity',0.1,0);
+					num++;	
+					}
+					else if(num==10){
+						num=0;clearInterval(abox.ok)
+						off=true;
+					}
+					},200)	
+				}
+				}
+			
+		}
+	</script>
+	
+	<body>
+		<div id="bbox">
+			<div id="box">
+				
+			</div>
+		</div>
+		
+	</body>
+</html>
